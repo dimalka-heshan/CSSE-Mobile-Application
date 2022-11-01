@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import MaterialIconTextButtonsFooter3 from "../components/MaterialIconTextButtonsFooter3";
+import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-function LocalPasengerProfiles(props) {
+function LocalPasengerProfiles({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.group3}>
@@ -48,13 +49,11 @@ function LocalPasengerProfiles(props) {
               style={styles.image1}
             ></Image>
              <View style={styles.icon4Filler}></View>
-            <FontAwesomeIcon
+          </View>
+          <FontAwesomeIcon
               name="pencil-square-o"
               style={styles.icon4}
             ></FontAwesomeIcon>
-           
-
-          </View>
           <Text style={styles.ravinduSandeepana1}>Ravindu Sandeepana</Text>
           <View style={styles.icon5Row}>
             <EntypoIcon name="users" style={styles.icon5}></EntypoIcon>
@@ -85,9 +84,29 @@ function LocalPasengerProfiles(props) {
             </View>
           </View>
         </View>
-        <MaterialIconTextButtonsFooter3
-          style={styles.materialIconTextButtonsFooter1}
-        ></MaterialIconTextButtonsFooter3>
+        <View style={[styles.container1, styles.materialIconTextButtonsFooter1]}>
+      <TouchableOpacity style={styles.buttonWrapper1} onPress={() => navigation.navigate('UserHome')}>
+        <MaterialCommunityIconsIcon
+          name="camera-timer"
+          style={styles.icon11}
+        ></MaterialCommunityIconsIcon>
+        <Text style={styles.dashboar}>Dashboar</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.activeButtonWrapper} onPress={() => navigation.navigate('MyQr')}>
+        <MaterialCommunityIconsIcon
+          name="qrcode"
+          style={styles.activeIcon}
+        ></MaterialCommunityIconsIcon>
+        <Text style={styles.myQr}>My QR</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.buttonWrapper2} onPress={() => navigation.navigate('LocalPasengerProfiles')}>
+        <MaterialCommunityIconsIcon
+          name="account"
+          style={styles.icon22}
+        ></MaterialCommunityIconsIcon>
+        <Text style={styles.profile1}>Profile</Text>
+      </TouchableOpacity>
+      </View>
       </View>
     </View>
   );
@@ -320,6 +339,84 @@ const styles = StyleSheet.create({
     width: 393,
     backgroundColor: "rgba(0,0,0,1)",
     marginTop: 98
+  },
+
+
+
+  container1: {
+    backgroundColor: "#FFF",
+    flexDirection: "row",
+    shadowColor: "#111",
+    shadowOffset: {
+      width: 0,
+      height: -2
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.2,
+    elevation: 3
+  },
+  buttonWrapper1: {
+    flex: 1,
+    paddingTop: 8,
+    paddingBottom: 10,
+    paddingHorizontal: 12,
+    minWidth: 80,
+    maxWidth: 168,
+    alignItems: "center"
+  },
+  icon11: {
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    fontSize: 24,
+    opacity: 0.8
+  },
+  dashboar: {
+    fontSize: 12,
+    color: "rgba(255,255,255,1)",
+    backgroundColor: "transparent",
+    paddingTop: 4
+  },
+  activeButtonWrapper: {
+    flex: 1,
+    paddingTop: 6,
+    paddingBottom: 10,
+    paddingHorizontal: 12,
+    minWidth: 80,
+    maxWidth: 168,
+    alignItems: "center"
+  },
+  activeIcon: {
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    fontSize: 24,
+    opacity: 0.8
+  },
+  myQr: {
+    fontSize: 12,
+    color: "rgba(255,255,255,1)",
+    backgroundColor: "transparent",
+    paddingTop: 4
+  },
+  buttonWrapper2: {
+    flex: 1,
+    paddingTop: 8,
+    paddingBottom: 10,
+    paddingHorizontal: 12,
+    minWidth: 80,
+    maxWidth: 168,
+    alignItems: "center"
+  },
+  icon22: {
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    fontSize: 24,
+    opacity: 0.8
+  },
+  profile1: {
+    fontSize: 12,
+    color: "rgba(255,255,255,1)",
+    backgroundColor: "transparent",
+    paddingTop: 4
   }
 });
 
