@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
-import MaterialIconTextButtonsFooter3 from "../components/MaterialIconTextButtonsFooter3";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 function MyQr({navigation}) {
@@ -46,7 +45,7 @@ function MyQr({navigation}) {
         <Text style={styles.myQr2}>My QR</Text>
       </View>
       <View style={[styles.container1, styles.materialIconTextButtonsFooter1]}>
-      <TouchableOpacity style={styles.buttonWrapper1} onPress={() => navigation.navigate('UserHome')}>
+      <TouchableOpacity style={styles.buttonWrapper1} onPress={() => navigation.navigate('FUserHome')}>
         <MaterialCommunityIconsIcon
           name="camera-timer"
           style={styles.icon11}
@@ -60,7 +59,7 @@ function MyQr({navigation}) {
         ></MaterialCommunityIconsIcon>
         <Text style={styles.myQr1}>My QR</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonWrapper2} onPress={() => navigation.navigate('Profile')}>
+      <TouchableOpacity style={styles.buttonWrapper2} onPress={() => navigation.navigate('LocalPasengerProfiles')}>
         <MaterialCommunityIconsIcon
           name="account"
           style={styles.icon22}
@@ -158,6 +157,7 @@ const styles = StyleSheet.create({
   },
   loremIpsum2: {
     color: "rgba(255,255,255,1)",
+    width:1000,
     fontSize: 12
   },
   loremIpsum1StackColumn: {

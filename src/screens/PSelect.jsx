@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity } from "react-native";
-import MaterialButtonDark2 from "../components/MaterialButtonDark2";
-import MaterialButtonDark1 from "../components/MaterialButtonDark1";
 import Icon from "react-native-vector-icons/Entypo";
 
 function PSelect({navigation}) {
