@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
-import MaterialIconTextButtonsFooter3 from "../components/MaterialIconTextButtonsFooter3";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-function UserHome({navigation}) {
+function LUserHome({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.group23}>
@@ -50,17 +49,17 @@ function UserHome({navigation}) {
             </View>
           </View>
           <View style={styles.group8Row}>
-          <TouchableOpacity onPress={() => navigation.navigate('MyQr')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Travelhistory')}>
             <View style={styles.group8}>
               <View style={styles.group5}>
                 <View style={styles.group7}>
                   <View style={styles.rect2}>
                     <Image
-                      source={require("../assets/images/Top_up_credit-bro.png")}
+                      source={require("../../assets/images/Top_up_credit-bro.png")}
                       resizeMode="contain"
                       style={styles.image10}
                     ></Image>
-                    <Text style={styles.recharge4}>Recharge</Text>
+                    <Text style={styles.recharge4}>Credits</Text>
                   </View>
                 </View>
               </View>
@@ -80,7 +79,7 @@ function UserHome({navigation}) {
                 </View>
               </View>
               <Image
-                source={require("../assets/images/QR_Code-pana.png")}
+                source={require("../../assets/images/QR_Code-pana.png")}
                 resizeMode="contain"
                 style={styles.image11}
               ></Image>
@@ -89,7 +88,7 @@ function UserHome({navigation}) {
 
           </View>
           <View style={styles.group18Stack}>
-          <TouchableOpacity onPress={() => navigation.navigate('MyQr')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Travelhistory')}>
             <View style={styles.group18}>
               <View style={styles.group9Stack}>
                 <View style={styles.group9}>
@@ -100,7 +99,7 @@ function UserHome({navigation}) {
                   </View>
                 </View>
                 <Image
-                  source={require("../assets/images/MicrosoftTeams-image.png")}
+                  source={require("../../assets/images/MicrosoftTeams-image.png")}
                   resizeMode="contain"
                   style={styles.image12}
                 ></Image>
@@ -118,7 +117,7 @@ function UserHome({navigation}) {
               </View>
             </View>
             <Image
-              source={require("../assets/images/Profile_Interface-rafiki.png")}
+              source={require("../../assets/images/Profile_Interface-rafiki.png")}
               resizeMode="contain"
               style={styles.image13}
             ></Image>
@@ -129,7 +128,7 @@ function UserHome({navigation}) {
             style={styles.materialIconTextButtonsFooter1}
           ></MaterialIconTextButtonsFooter3> */}
     <View style={[styles.container1, styles.materialIconTextButtonsFooter1]}>
-      <TouchableOpacity style={styles.buttonWrapper1} onPress={() => navigation.navigate('UserHome')}>
+      <TouchableOpacity style={styles.buttonWrapper1} onPress={() => navigation.navigate('LUserHome')}>
         <MaterialCommunityIconsIcon
           name="camera-timer"
           style={styles.icon11}
@@ -592,5 +591,5 @@ const styles = StyleSheet.create({
   }
 });
 
-export default UserHome;
+export default LUserHome;
 

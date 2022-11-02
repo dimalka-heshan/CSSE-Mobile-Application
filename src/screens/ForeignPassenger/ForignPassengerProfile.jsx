@@ -3,13 +3,14 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import MaterialIconTextButtonsFooter3 from "../components/MaterialIconTextButtonsFooter3";
+import IoniconsIcon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-function LocalPasengerProfiles({navigation}) {
+
+function ForignPassengerProfile({navigation}) {
   return (
     <View style={styles.container}>
-      <View style={styles.group3}>
+      <View style={styles.group2}>
         <View style={styles.rect1}>
           <View style={styles.group1}>
             <View style={styles.sIpsum1StackStackRow}>
@@ -40,52 +41,63 @@ function LocalPasengerProfiles({navigation}) {
           </View>
           <Text style={styles.profile}>Profile</Text>
         </View>
-        <View style={styles.group2}>
-          <View style={styles.icon4Row}>
+        <View style={styles.imageRow}>
+          <Image
+            source={require("../../assets/images/4ss.jpg")}
+            resizeMode="contain"
+            style={styles.image}
+          ></Image>
 
-            <Image
-              source={require("../assets/images/3e.jpg")}
-              resizeMode="contain"
-              style={styles.image1}
-            ></Image>
-             <View style={styles.icon4Filler}></View>
-          </View>
+        <TouchableOpacity onPress={() => navigation.navigate('ForignPassengerUpdate')}>
           <FontAwesomeIcon
-              name="pencil-square-o"
-              style={styles.icon4}
-            ></FontAwesomeIcon>
-          <Text style={styles.ravinduSandeepana1}>Ravindu Sandeepana</Text>
-          <View style={styles.icon5Row}>
-            <EntypoIcon name="users" style={styles.icon5}></EntypoIcon>
-            <Text style={styles.localPassenger}>LocalPassenger</Text>
+            name="pencil-square-o"
+            style={styles.icon4}
+          ></FontAwesomeIcon>
+        </TouchableOpacity>
+
+        </View>
+        <Text style={styles.udariSithupraba}>Udari Sithupraba</Text>
+        <View style={styles.icon5Row}>
+          <EntypoIcon name="users" style={styles.icon5}></EntypoIcon>
+          <Text style={styles.foreignPassenger}>ForeignPassenger</Text>
+        </View>
+        <View style={styles.icon6Row}>
+          <FeatherIcon name="phone" style={styles.icon6}></FeatherIcon>
+          <View style={styles.mobile1Column}>
+            <Text style={styles.mobile1}>Mobile</Text>
+            <Text style={styles.loremIpsum3}>0716328599</Text>
           </View>
-          <View style={styles.icon6Row}>
-            <FeatherIcon name="phone" style={styles.icon6}></FeatherIcon>
-            <View style={styles.mobile1Column}>
-              <Text style={styles.mobile1}>Mobile</Text>
-              <Text style={styles.loremIpsum3}>0779875632</Text>
-            </View>
+        </View>
+        <View style={styles.icon7Row}>
+          <EntypoIcon name="mail-with-circle" style={styles.icon7}></EntypoIcon>
+          <View style={styles.email1Column}>
+            <Text style={styles.email1}>Email</Text>
+            <Text style={styles.udariGmailCom}>udari@gmail.com</Text>
           </View>
-          <View style={styles.icon7Row}>
-            <EntypoIcon
-              name="mail-with-circle"
-              style={styles.icon7}
-            ></EntypoIcon>
-            <View style={styles.email1Column}>
-              <Text style={styles.email1}>Email</Text>
-              <Text style={styles.nkravindu1}>nkravindu7@gmail.com</Text>
-            </View>
+        </View>
+        <View style={styles.icon8Row}>
+          <EntypoIcon name="ticket" style={styles.icon8}></EntypoIcon>
+          <View style={styles.passportNoColumn}>
+            <Text style={styles.passportNo}>Passport No</Text>
+            <Text style={styles.nkravindu2}>200003800910</Text>
           </View>
-          <View style={styles.icon8Row}>
-            <EntypoIcon name="ticket" style={styles.icon8}></EntypoIcon>
-            <View style={styles.nic1Column}>
-              <Text style={styles.nic1}>NIC</Text>
-              <Text style={styles.nkravindu2}>200003800910</Text>
-            </View>
+        </View>
+        <View style={styles.icon9Row}>
+          <EntypoIcon name="location-pin" style={styles.icon9}></EntypoIcon>
+          <View style={styles.countryColumn}>
+            <Text style={styles.country}>Country</Text>
+            <Text style={styles.australia}>Australia</Text>
+          </View>
+        </View>
+        <View style={styles.icon10Row}>
+          <IoniconsIcon name="md-time" style={styles.icon10}></IoniconsIcon>
+          <View style={styles.expireDateColumn}>
+            <Text style={styles.expireDate}>ExpireDate</Text>
+            <Text style={styles.text}>2022-11-29</Text>
           </View>
         </View>
         <View style={[styles.container1, styles.materialIconTextButtonsFooter1]}>
-      <TouchableOpacity style={styles.buttonWrapper1} onPress={() => navigation.navigate('UserHome')}>
+      <TouchableOpacity style={styles.buttonWrapper1} onPress={() => navigation.navigate('FUserHome')}>
         <MaterialCommunityIconsIcon
           name="camera-timer"
           style={styles.icon11}
@@ -114,17 +126,15 @@ function LocalPasengerProfiles({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center"
+    flex: 1
   },
-  group3: {
+  group2: {
     width: 393,
-    height: 851,
-    alignSelf: "center"
+    height: 851
   },
   rect1: {
     width: 393,
-    height: 183,
+    height: 185,
     backgroundColor: "rgba(0,0,0,1)"
   },
   group1: {
@@ -191,7 +201,6 @@ const styles = StyleSheet.create({
   },
   loremIpsum2: {
     color: "rgba(255,255,255,1)",
-    width: 1000,
     fontSize: 12
   },
   loremIpsum1StackColumn: {
@@ -207,142 +216,177 @@ const styles = StyleSheet.create({
   profile: {
     color: "rgba(255,255,255,1)",
     fontSize: 24,
-    marginTop: 32,
+    marginTop: 37,
     marginLeft: 13
   },
-  group2: {
-    width: 292,
-    height: 457,
-    marginTop: 39,
-    marginLeft: 54
+  image: {
+    width: 111,
+    height: 111,
+    borderRadius: 100
   },
   icon4: {
     color: "rgba(74,74,74,1)",
     fontSize: 30,
-    marginLeft: 185
+    marginLeft: 69
   },
-  icon4Filler: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  image1: {
-    width: 111,
-    height: 111,
-    borderRadius: 100,
-    marginRight: 1040
-  },
-  icon4Row: {
+  imageRow: {
     height: 111,
     flexDirection: "row",
-    marginLeft: 77
+    marginTop: 31,
+    marginLeft: 123,
+    marginRight: 60
   },
-  ravinduSandeepana1: {
+  udariSithupraba: {
     color: "#121212",
     fontSize: 20,
-    marginTop: 3,
-    marginLeft: 45
+    marginLeft: 98
   },
   icon5: {
     color: "rgba(208,2,27,1)",
-    fontSize: 35
+    fontSize: 29
   },
-  localPassenger: {
+  foreignPassenger: {
     color: "#121212",
     fontSize: 17,
-    marginLeft: 10,
-    marginTop: 9
+    marginLeft: 11,
+    marginTop: 6
   },
   icon5Row: {
-    height: 38,
+    height: 32,
     flexDirection: "row",
-    marginTop: 47,
-    marginRight: 126
+    marginTop: 30,
+    marginLeft: 43,
+    marginRight: 173
   },
   icon6: {
     color: "rgba(74,144,226,1)",
     fontSize: 30,
-    marginTop: 9
+    marginTop: 5
   },
   mobile1: {
     color: "#121212",
-    fontSize: 17
+    fontSize: 17,
+    marginLeft: 1
   },
   loremIpsum3: {
     color: "#121212",
-    marginTop: 6,
-    width: 100,
-    marginLeft: 2
+    width: 1000
   },
   mobile1Column: {
-    width: 81,
-    marginLeft: 7
+    width: 79,
+    marginLeft: 11
   },
   icon6Row: {
-    height: 43,
+    height: 37,
     flexDirection: "row",
-    marginTop: 38,
-    marginLeft: 3,
-    marginRight: 171
+    marginTop: 29,
+    marginLeft: 43,
+    marginRight: 230
   },
   icon7: {
     color: "rgba(74,144,226,1)",
     fontSize: 30,
-    marginTop: 3
+    marginTop: 4
   },
   email1: {
     color: "#121212",
     fontSize: 17
   },
-  nkravindu1: {
+  udariGmailCom: {
     color: "#121212",
-    width: 1000,
-    marginTop: 2
+    width: 1000
   },
   email1Column: {
-    width: 147,
-    marginLeft: 7
+    width: 110,
+    marginLeft: 15
   },
   icon7Row: {
-    height: 39,
+    height: 37,
     flexDirection: "row",
-    marginTop: 37,
-    marginLeft: 3,
-    marginRight: 105
+    marginTop: 28,
+    marginLeft: 39,
+    marginRight: 199
   },
   icon8: {
     color: "rgba(155,155,155,1)",
-    fontSize: 29
+    fontSize: 29,
+    marginTop: 4
   },
-  nic1: {
+  passportNo: {
     color: "#121212",
-    fontSize: 17,
-    marginLeft: 1
+    width: 1000,
+    fontSize: 17
   },
   nkravindu2: {
     color: "#121212",
     width: 1000,
-    marginTop: 5
+    marginTop: 3
   },
-  nic1Column: {
-    width: 94,
-    marginLeft: 5
+  passportNoColumn: {
+    width: 95,
+    marginLeft: 12
   },
   icon8Row: {
-    height: 42,
+    height: 40,
     flexDirection: "row",
-    marginTop: 35,
-    marginLeft: 5,
-    marginRight: 159
+    marginTop: 31,
+    marginLeft: 44,
+    marginRight: 213
+  },
+  icon9: {
+    color: "rgba(126,211,33,1)",
+    fontSize: 29,
+    marginTop: 4
+  },
+  country: {
+    color: "#121212",
+    fontSize: 17
+  },
+  australia: {
+    color: "#121212",
+    marginTop: 2
+  },
+  countryColumn: {
+    width: 60,
+    marginLeft: 11
+  },
+  icon9Row: {
+    height: 39,
+    flexDirection: "row",
+    marginTop: 23,
+    marginLeft: 44,
+    marginRight: 249
+  },
+  icon10: {
+    color: "rgba(74,144,226,1)",
+    fontSize: 29,
+    marginTop: 5
+  },
+  expireDate: {
+    color: "#121212",
+    fontSize: 17
+  },
+  text: {
+    color: "#121212",
+    marginTop: 4
+  },
+  expireDateColumn: {
+    width: 83,
+    marginLeft: 8
+  },
+  icon10Row: {
+    height: 41,
+    flexDirection: "row",
+    marginTop: 17,
+    marginLeft: 46,
+    marginRight: 232
   },
   materialIconTextButtonsFooter1: {
     height: 56,
     width: 393,
     backgroundColor: "rgba(0,0,0,1)",
-    marginTop: 98
+    marginTop: 16
   },
-
-
-
   container1: {
     backgroundColor: "#FFF",
     flexDirection: "row",
@@ -420,4 +464,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LocalPasengerProfiles;
+export default ForignPassengerProfile;
