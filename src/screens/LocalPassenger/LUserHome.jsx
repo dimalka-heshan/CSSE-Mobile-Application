@@ -135,7 +135,7 @@ function LUserHome({navigation}) {
         ></MaterialCommunityIconsIcon>
         <Text style={styles.dashboar}>Dashboar</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.activeButtonWrapper} onPress={() => navigation.navigate('MyQr')}>
+      <TouchableOpacity style={styles.activeButtonWrapper} onPress={() => navigation.navigate('LMyQr')}>
         <MaterialCommunityIconsIcon
           name="qrcode"
           style={styles.activeIcon}

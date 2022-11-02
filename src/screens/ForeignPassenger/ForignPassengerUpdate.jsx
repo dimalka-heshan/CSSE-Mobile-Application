@@ -80,7 +80,7 @@ function ForignPassengerUpdate({navigation}) {
         ></MaterialCommunityIconsIcon>
         <Text style={styles.dashboar}>Dashboar</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.activeButtonWrapper} onPress={() => navigation.navigate('MyQr')}>
+      <TouchableOpacity style={styles.activeButtonWrapper} onPress={() => navigation.navigate('FMyQr')}>
         <MaterialCommunityIconsIcon
           name="qrcode"
           style={styles.activeIcon}
@@ -213,7 +213,6 @@ const styles = StyleSheet.create({
     top: 23,
     left: 24,
     position: "absolute",
-    fontFamily: "roboto-regular",
     color: "#121212"
   },
   icon2: {
@@ -252,14 +251,12 @@ const styles = StyleSheet.create({
     top: 13,
     left: 13,
     position: "absolute",
-    fontFamily: "roboto-regular",
     color: "#121212"
   },
   stsSriLanka1: {
     top: 0,
     left: 0,
     position: "absolute",
-    fontFamily: "roboto-regular",
     color: "rgba(255,255,255,1)",
     fontSize: 21
   },
@@ -269,8 +266,8 @@ const styles = StyleSheet.create({
     marginLeft: 12
   },
   loremIpsum2: {
-    fontFamily: "roboto-regular",
     color: "rgba(255,255,255,1)",
+    width: 1000,
     fontSize: 12
   },
   loremIpsum1StackColumn: {
@@ -284,7 +281,6 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   profileUpdate1: {
-    fontFamily: "roboto-700",
     color: "rgba(255,255,255,1)",
     fontSize: 24,
     marginTop: 22,

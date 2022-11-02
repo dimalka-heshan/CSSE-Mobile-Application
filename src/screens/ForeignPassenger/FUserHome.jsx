@@ -49,7 +49,7 @@ function FUserHome({navigation}) {
             </View>
           </View>
           <View style={styles.group8Row}>
-          <TouchableOpacity onPress={() => navigation.navigate('Travelhistory')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Credits')}>
             <View style={styles.group8}>
               <View style={styles.group5}>
                 <View style={styles.group7}>
@@ -88,7 +88,7 @@ function FUserHome({navigation}) {
 
           </View>
           <View style={styles.group18Stack}>
-          <TouchableOpacity onPress={() => navigation.navigate('Travelhistory')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Alltravelhistory')}>
             <View style={styles.group18}>
               <View style={styles.group9Stack}>
                 <View style={styles.group9}>
@@ -135,14 +135,14 @@ function FUserHome({navigation}) {
         ></MaterialCommunityIconsIcon>
         <Text style={styles.dashboar}>Dashboar</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.activeButtonWrapper} onPress={() => navigation.navigate('MyQr')}>
+      <TouchableOpacity style={styles.activeButtonWrapper} onPress={() => navigation.navigate('FMyQr')}>
         <MaterialCommunityIconsIcon
           name="qrcode"
           style={styles.activeIcon}
         ></MaterialCommunityIconsIcon>
         <Text style={styles.myQr}>My QR</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonWrapper2} onPress={() => navigation.navigate('LocalPasengerProfiles')}>
+      <TouchableOpacity style={styles.buttonWrapper2} onPress={() => navigation.navigate('ForignPassengerProfile')}>
         <MaterialCommunityIconsIcon
           name="account"
           style={styles.icon22}

@@ -104,14 +104,14 @@ function ForignPassengerProfile({navigation}) {
         ></MaterialCommunityIconsIcon>
         <Text style={styles.dashboar}>Dashboar</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.activeButtonWrapper} onPress={() => navigation.navigate('MyQr')}>
+      <TouchableOpacity style={styles.activeButtonWrapper} onPress={() => navigation.navigate('FMyQr')}>
         <MaterialCommunityIconsIcon
           name="qrcode"
           style={styles.activeIcon}
         ></MaterialCommunityIconsIcon>
         <Text style={styles.myQr}>My QR</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonWrapper2} onPress={() => navigation.navigate('LocalPasengerProfiles')}>
+      <TouchableOpacity style={styles.buttonWrapper2} onPress={() => navigation.navigate('ForignPassengerProfile')}>
         <MaterialCommunityIconsIcon
           name="account"
           style={styles.icon22}
@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
   },
   loremIpsum2: {
     color: "rgba(255,255,255,1)",
+    width: 1000,
     fontSize: 12
   },
   loremIpsum1StackColumn: {
@@ -233,13 +234,13 @@ const styles = StyleSheet.create({
     height: 111,
     flexDirection: "row",
     marginTop: 31,
-    marginLeft: 123,
+    marginLeft: 137,
     marginRight: 60
   },
   udariSithupraba: {
     color: "#121212",
     fontSize: 20,
-    marginLeft: 98
+    marginLeft: 115
   },
   icon5: {
     color: "rgba(208,2,27,1)",

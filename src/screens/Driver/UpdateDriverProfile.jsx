@@ -1,46 +1,71 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, TouchableOpacity,  TextInput } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import MaterialFixedLabelTextbox from "../../components/MaterialFixedLabelTextbox";
-
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-function LocalPasengerUpdate({navigation}) {
+function UpdateDriverProfile({navigation}) {
   return (
     <View style={styles.container}>
-      <View style={styles.group2}>
-        <View style={styles.rect1}>
-          <View style={styles.group1}>
-            <View style={styles.sIpsum1StackStackRow}>
-              <View style={styles.sIpsum1StackStack}>
-                <View style={styles.sIpsum1Stack}>
-                  <Text style={styles.sIpsum1}></Text>
-                  <FontAwesomeIcon
-                    name="map-pin"
-                    style={styles.icon2}
-                  ></FontAwesomeIcon>
-                  <FontAwesomeIcon
-                    name="location-arrow"
-                    style={styles.icon3}
-                  ></FontAwesomeIcon>
-                </View>
-                <EntypoIcon name="compass" style={styles.icon1}></EntypoIcon>
+      <View style={styles.rect1}>
+        <View style={styles.group1}>
+          <View style={styles.sIpsum1StackStackRow}>
+            <View style={styles.sIpsum1StackStack}>
+              <View style={styles.sIpsum1Stack}>
+                <Text style={styles.sIpsum1}></Text>
+                <FontAwesomeIcon
+                  name="map-pin"
+                  style={styles.icon2}
+                ></FontAwesomeIcon>
+                <FontAwesomeIcon
+                  name="location-arrow"
+                  style={styles.icon3}
+                ></FontAwesomeIcon>
               </View>
-              <View style={styles.loremIpsum1StackColumn}>
-                <View style={styles.loremIpsum1Stack}>
-                  <Text style={styles.loremIpsum1}></Text>
-                  <Text style={styles.stsSriLanka1}>STS - Sri Lanka</Text>
-                </View>
-                <Text style={styles.loremIpsum2}>
-                  Smart Tranceport System - Sri Lanka
-                </Text>
+              <EntypoIcon name="compass" style={styles.icon1}></EntypoIcon>
+            </View>
+            <View style={styles.loremIpsum1StackColumn}>
+              <View style={styles.loremIpsum1Stack}>
+                <Text style={styles.loremIpsum1}></Text>
+                <Text style={styles.stsSriLanka1}>STS - Sri Lanka</Text>
               </View>
+              <Text style={styles.loremIpsum2}>
+                Smart Tranceport System - Sri Lanka
+              </Text>
             </View>
           </View>
-          <Text style={styles.profileUpdate}>Profile update</Text>
         </View>
-        <View style={styles.rect2}>
+        <Text style={styles.profileUpdate1}>Profile update</Text>
+      </View>
+
+
+      <View style={[styles.container1, styles.cupertinoFooter1]}>
+      <TouchableOpacity style={styles.btnWrapper1} onPress={() => navigation.navigate('BusProfiles')}>
+        <MaterialCommunityIconsIcon
+          name="bus-side"
+          style={styles.icon00}
+        ></MaterialCommunityIconsIcon>
+        <Text style={styles.profile11}>Bus</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btnWrapper2} onPress={() => navigation.navigate('DriverQRScanner')}>
+        <MaterialCommunityIconsIcon
+          name="qrcode-scan"
+          style={styles.icon100}
+        ></MaterialCommunityIconsIcon>
+        <Text style={styles.scanQr}>Scan QR</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btnWrapper4} onPress={() => navigation.navigate('Driverprofiles')}>
+        <MaterialCommunityIconsIcon
+          name="account"
+          style={styles.icon300}
+        ></MaterialCommunityIconsIcon>
+        <Text style={styles.profile}>Profile</Text>
+      </TouchableOpacity>
+    </View>
+
+
+      <View style={styles.rect2}>
         <View style={[styles.container5, styles.materialStackedLabelTextbox5]}>
           <Text style={styles.firstName}>First Name</Text>
           <TextInput placeholder="Input" style={styles.inputStyle5}></TextInput>
@@ -72,31 +97,6 @@ function LocalPasengerUpdate({navigation}) {
           <TouchableOpacity style={[styles.containerbtnx, styles.materialButtonViolet1]}>
             <Text style={styles.update}>Update</Text>
           </TouchableOpacity>
-        </View>
-
-      <View style={[styles.container1, styles.materialIconTextButtonsFooter1]}>
-      <TouchableOpacity style={styles.buttonWrapper1} onPress={() => navigation.navigate('LUserHome')}>
-        <MaterialCommunityIconsIcon
-          name="camera-timer"
-          style={styles.icon11}
-        ></MaterialCommunityIconsIcon>
-        <Text style={styles.dashboar}>Dashboar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.activeButtonWrapper} onPress={() => navigation.navigate('LMyQr')}>
-        <MaterialCommunityIconsIcon
-          name="qrcode"
-          style={styles.activeIcon}
-        ></MaterialCommunityIconsIcon>
-        <Text style={styles.myQr}>My QR</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonWrapper2} onPress={() => navigation.navigate('LocalPasengerProfiles')}>
-        <MaterialCommunityIconsIcon
-          name="account"
-          style={styles.icon22}
-        ></MaterialCommunityIconsIcon>
-        <Text style={styles.profile1}>Profile</Text>
-      </TouchableOpacity>
-      </View>
       </View>
     </View>
   );
@@ -166,6 +166,12 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 1
   },
+  materialStackedLabelTextbox5: {
+    height: 60,
+    width: 329,
+    marginTop: 27,
+    marginLeft: 20
+  },
   container5: {
     borderBottomWidth: 1,
     borderColor: "#D9D5DC",
@@ -188,40 +194,12 @@ const styles = StyleSheet.create({
     paddingBottom: 1
   },
   container: {
-    flex: 1,
-    justifyContent: "center"
-  },
-  group2: {
-    width: 393,
-    height: 851,
-    alignSelf: "center"
+    flex: 1
   },
   rect1: {
     width: 393,
-    height: 185,
+    height: 167,
     backgroundColor: "rgba(0,0,0,1)"
-  },
-  containerbtnx: {
-    backgroundColor: "rgba(92,159,19,1)",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
-    borderRadius: 25,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    shadowOpacity: 0.35,
-    shadowRadius: 5,
-    elevation: 2,
-    minWidth: 88,
-    paddingLeft: 16,
-    paddingRight: 16
-  },
-  update: {
-    color: "#fff",
-    fontSize: 14
   },
   group1: {
     width: 243,
@@ -286,8 +264,8 @@ const styles = StyleSheet.create({
     marginLeft: 12
   },
   loremIpsum2: {
+    width: 1000,
     color: "rgba(255,255,255,1)",
-    width:1000,
     fontSize: 12
   },
   loremIpsum1StackColumn: {
@@ -300,11 +278,17 @@ const styles = StyleSheet.create({
     height: 57,
     flexDirection: "row"
   },
-  profileUpdate: {
+  profileUpdate1: {
     color: "rgba(255,255,255,1)",
-    fontSize: 24,
-    marginTop: 34,
+    fontSize: 25,
+    marginTop: 20,
     marginLeft: 13
+  },
+  cupertinoFooter1: {
+    height: 55,
+    width: 393,
+    backgroundColor: "rgba(0,0,0,1)",
+    marginTop: 582
   },
   rect2: {
     width: 368,
@@ -319,7 +303,7 @@ const styles = StyleSheet.create({
     elevation: 45,
     shadowOpacity: 1,
     shadowRadius: 15,
-    marginTop: 23,
+    marginTop: -624,
     marginLeft: 12
   },
   materialStackedLabelTextbox1: {
@@ -340,7 +324,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 18
   },
-  materialStackedLabelTextbox5: {
+  materialStackedLabelTextbox4: {
     height: 60,
     width: 329,
     marginTop: 27,
@@ -371,13 +355,7 @@ const styles = StyleSheet.create({
     marginTop: 74,
     marginLeft: 127
   },
-  materialIconTextButtonsFooter1: {
-    height: 56,
-    width: 393,
-    backgroundColor: "rgba(0,0,0,1)",
-    marginTop: 13
-  },
-  container1: {
+    container1: {
     backgroundColor: "#FFF",
     flexDirection: "row",
     shadowColor: "#111",
@@ -446,12 +424,97 @@ const styles = StyleSheet.create({
     fontSize: 24,
     opacity: 0.8
   },
+  containerbtnx: {
+    backgroundColor: "rgba(92,159,19,1)",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    borderRadius: 25,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 5,
+    elevation: 2,
+    minWidth: 88,
+    paddingLeft: 16,
+    paddingRight: 16
+  },
+  update: {
+    color: "#fff",
+    fontSize: 14
+  },
   profile1: {
     fontSize: 12,
     color: "rgba(255,255,255,1)",
     backgroundColor: "transparent",
     paddingTop: 4
+  },
+  container1: {
+    backgroundColor: "rgba(255,255,255,1)",
+    flexDirection: "row",
+    width: "100%"
+  },
+  btnWrapper1: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  icon00: {
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    fontSize: 39,
+    marginTop: -5,
+    opacity: 0.8
+  },
+  bus1: {
+    fontSize: 12,
+    backgroundColor: "transparent",
+    paddingTop: 4
+  },
+  btnWrapper2: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  icon100: {
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    fontSize: 24,
+    opacity: 0.8
+  },
+  scanQr: {
+    fontSize: 12,
+    color: "rgba(255,255,255,1)",
+    backgroundColor: "transparent",
+    paddingTop: 4
+  },
+  btnWrapper4: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  icon300: {
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    fontSize: 24,
+    opacity: 0.8
+  },
+  profile: {
+    fontSize: 12,
+    color: "rgba(255,255,255,1)",
+    backgroundColor: "transparent",
+    paddingTop: 4
+  },
+  profile11: {
+    fontSize: 12,
+    color: "rgba(255,255,255,1)",
+    backgroundColor: "transparent",
+    marginTop: -10,
+    paddingTop: 4
   }
 });
 
-export default LocalPasengerUpdate;
+export default UpdateDriverProfile;
