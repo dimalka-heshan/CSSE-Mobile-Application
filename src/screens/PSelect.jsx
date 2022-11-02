@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   selectCategory: {
     color: "#121212",
-    height: 46,
+    height: 60,
     width: 345,
     textAlign: "center",
     fontSize: 40,

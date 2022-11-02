@@ -8,7 +8,7 @@ function LSignUp({navigation}) {
       {/* <MaterialButtonDark
         style={styles.materialButtonDark}
       ></MaterialButtonDark> */}
-    <TouchableOpacity style={[styles.containerbtn, styles.materialButtonDark]}>
+    <TouchableOpacity style={[styles.containerbtn, styles.materialButtonDark]} onPress={() => navigation.navigate('SignIn')}>
       <Text style={styles.signUpbtn}>Sign Up</Text>
     </TouchableOpacity>
       <Text style={styles.signUp2}>Sign Up</Text>

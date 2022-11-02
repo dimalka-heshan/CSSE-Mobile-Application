@@ -6,7 +6,7 @@ function SignIn({navigation}) {
     <View style={styles.container}>
       <TouchableOpacity 
         style={[styles.containerx, styles.materialButtonDark]}
-        onPress={() => navigation.navigate('FUserHome')}
+        onPress={() => navigation.navigate('Driverdashboard')}
       >
         <Text style={styles.signUpx}>Sign In</Text>
       </TouchableOpacity>

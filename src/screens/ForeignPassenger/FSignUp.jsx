@@ -6,7 +6,7 @@ import Iconf from "react-native-vector-icons/MaterialCommunityIcons";
 function FSignUp({navigation}) {
   return (
     <View style={styles.container}>
-    <TouchableOpacity style={[styles.containerbtn, styles.materialButtonDark]} onPress={() => navigation.navigate('FUserHome')} >
+    <TouchableOpacity style={[styles.containerbtn, styles.materialButtonDark]} onPress={() => navigation.navigate('LUserHome')} >
       <Text style={styles.signUpbtn}>Sign Up</Text>
     </TouchableOpacity>
     <Text style={styles.signUp2}>Sign Up</Text>
