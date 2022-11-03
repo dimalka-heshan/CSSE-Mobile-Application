@@ -1,12 +1,70 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Image, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function SignIn({navigation}) {
+export default function SignIn({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const handleLogin = async () => {
+    if (email === "" || password === "") {
+      setError("Enter email and password");
+    } else {
+      await axios
+        .post(
+          "https://ticketing-backend.azurewebsites.net/api/user/userLogin",
+          {
+            email,
+            password,
+          }
+        )
+        .then((res) => {
+          if (res.data.status) {
+            var token = res.data.token;
+            console.log(token);
+            const storeData = async (value) => {
+              try {
+                await AsyncStorage.setItem("Token", value);
+              } catch (e) {
+                console.log(e);
+              }
+            };
+            switch (res.data.role) {
+              case "Driver":
+                AsyncStorage.clear();
+                storeData(token);
+                navigation.navigate("Driverdashboard");
+                break;
+              case "Admin":
+                console.log("Admin");
+                break;
+              default:
+                console.log("User");
+            }
+          } else {
+            setError(res.data.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setError("Invalid email or password");
+        });
+    }
+  };
   return (
     <View style={styles.container}>
-      <TouchableOpacity 
+      <TouchableOpacity
         style={[styles.containerx, styles.materialButtonDark]}
-        onPress={() => navigation.navigate('Driverdashboard')}
+        onPress={handleLogin}
       >
         <Text style={styles.signUpx}>Sign In</Text>
       </TouchableOpacity>
@@ -16,10 +74,19 @@ function SignIn({navigation}) {
         style={styles.image}
       ></Image>
       <Text style={styles.text}>Sign In</Text>
-      <TextInput placeholder="Email" style={styles.textInput2}></TextInput>
-      <TextInput placeholder="Password" style={styles.textInput}></TextInput>
+      <TextInput
+        placeholder="Email"
+        style={styles.textInput2}
+        onChangeText={(text) => setEmail(text)}
+      ></TextInput>
+      <TextInput
+        placeholder="Password"
+        style={styles.textInput}
+        onChangeText={(text) => setPassword(text)}
+      ></TextInput>
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
       <Text style={styles.loremIpsum}>Don&#39;t have an account yet?</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('PSelect')}>
+      <TouchableOpacity onPress={() => navigation.navigate("PSelect")}>
         <Text style={styles.signUp}>Sign Up</Text>
       </TouchableOpacity>
     </View>
@@ -27,9 +94,16 @@ function SignIn({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  errorText: {
+    color: "red",
+    fontSize: 15,
+    textAlign: "center",
+    marginTop: 10,
+    fontWeight: "bold",
+  },
   container: {
     flex: 1,
-    backgroundColor: "rgba(238,238,30,1)"
+    backgroundColor: "rgba(238,238,30,1)",
   },
   materialButtonDark: {
     height: 47,
@@ -38,19 +112,19 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(0,0,0,1)",
     shadowOffset: {
       width: 3,
-      height: 3
+      height: 3,
     },
     elevation: 5,
     shadowOpacity: 1,
     shadowRadius: 0,
     marginTop: 596,
-    marginLeft: 66
+    marginLeft: 66,
   },
   image: {
     width: 255,
     height: 251,
     marginTop: -475,
-    marginLeft: 73
+    marginLeft: 73,
   },
   text: {
     color: "#121212",
@@ -59,7 +133,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 40,
     marginTop: -311,
-    marginLeft: 83
+    marginLeft: 83,
   },
   textInput2: {
     color: "#121212",
@@ -72,7 +146,7 @@ const styles = StyleSheet.create({
     borderColor: "#000000",
     fontSize: 18,
     marginTop: 272,
-    marginLeft: 33
+    marginLeft: 33,
   },
   textInput: {
     color: "#121212",
@@ -85,18 +159,18 @@ const styles = StyleSheet.create({
     borderColor: "#000000",
     fontSize: 18,
     marginTop: 19,
-    marginLeft: 33
+    marginLeft: 33,
   },
   loremIpsum: {
     color: "#121212",
     fontSize: 16,
     marginTop: 113,
-    marginLeft: 107
+    marginLeft: 107,
   },
   signUp: {
     color: "rgba(74,144,226,1)",
     marginTop: 2,
-    marginLeft: 177
+    marginLeft: 177,
   },
   containerx: {
     backgroundColor: "#212121",
@@ -107,20 +181,18 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     shadowOpacity: 0.35,
     shadowRadius: 5,
     elevation: 2,
     minWidth: 88,
     paddingLeft: 16,
-    paddingRight: 16
+    paddingRight: 16,
   },
   signUpx: {
     color: "rgba(255,255,255,1)",
     fontSize: 18,
-    lineHeight: 18
-  }
+    lineHeight: 18,
+  },
 });
-
-export default SignIn;

@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -7,12 +7,15 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { Dropdown } from "react-native-element-dropdown";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const data = [
   {
@@ -30,6 +33,22 @@ const data = [
 ];
 function BusProfiles({ navigation }) {
   const [value, setValue] = useState(null);
+  const [token, setToken] = useState("");
+  const [busID, setBusID] = useState("");
+
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("Token");
+      if (value !== null) {
+        setToken(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+  _retrieveData();
+
+  console.log(token);
   const renderItem = (item) => {
     return (
       <View style={styles.item}>
