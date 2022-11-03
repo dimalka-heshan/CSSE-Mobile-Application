@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -6,14 +6,75 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import MaterialFixedLabelTextbox from "../../components/MaterialFixedLabelTextbox";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 function UpdateDriverProfile({ navigation }) {
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [phoneNo, setphoneNo] = useState("");
+  const [nic, setnic] = useState("");
+
+  const GetDriver = async () => {
+    const Token = await AsyncStorage.getItem("Token");
+    await axios
+      .get("https://ticketing-backend.azurewebsites.net/api/user/profile", {
+        headers: {
+          Authorization: `${Token}`,
+        },
+      })
+      .then((res) => {
+        if (res.data.status) {
+          setfirstName(res.data.user.firstName);
+          setlastName(res.data.user.lastName);
+          setphoneNo(res.data.user.phoneNo);
+          setnic(res.data.user.nic);
+        }
+      })
+      .catch((err) => {
+        console.log({ Error: err });
+      });
+  };
+
+  useEffect(() => {
+    GetDriver();
+  }, []);
+
+  const onUpdateDriver = async () => {
+    const Token = await AsyncStorage.getItem("Token");
+    await axios
+      .patch(
+        "https://ticketing-backend.azurewebsites.net/api/user/updateUser",
+        {
+          firstName: firstName,
+          lastName: lastName,
+          phoneNo: phoneNo,
+          nic: nic,
+        },
+        {
+          headers: {
+            Authorization: `${Token}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.status) {
+          Alert.alert("Profile Updated");
+          navigation.navigate("Driverprofiles");
+        }
+      })
+      .catch((err) => {
+        Alert.alert("Something went wrong");
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.rect1}>
@@ -49,19 +110,39 @@ function UpdateDriverProfile({ navigation }) {
       <View style={styles.rect2}>
         <View style={[styles.container5, styles.materialStackedLabelTextbox5]}>
           <Text style={styles.firstName}>First Name</Text>
-          <TextInput placeholder="Input" style={styles.inputStyle5}></TextInput>
+          <TextInput
+            placeholder="Input"
+            style={styles.inputStyle5}
+            value={firstName}
+            onChangeText={(text) => setfirstName(text)}
+          ></TextInput>
         </View>
         <View style={[styles.container3, styles.materialStackedLabelTextbox3]}>
           <Text style={styles.lastName}>Last Name</Text>
-          <TextInput placeholder="Input" style={styles.inputStyle3}></TextInput>
+          <TextInput
+            placeholder="Input"
+            style={styles.inputStyle3}
+            value={lastName}
+            onChangeText={(text) => setlastName(text)}
+          ></TextInput>
         </View>
         <View style={[styles.container4, styles.materialStackedLabelTextbox3]}>
           <Text style={styles.mobileNo}>Mobile No</Text>
-          <TextInput placeholder="Input" style={styles.inputStyle4}></TextInput>
+          <TextInput
+            placeholder="Input"
+            style={styles.inputStyle3}
+            value={phoneNo}
+            onChangeText={(text) => setphoneNo(text)}
+          ></TextInput>
         </View>
         <View style={[styles.container6, styles.materialStackedLabelTextbox5]}>
           <Text style={styles.passportNo}>NIC</Text>
-          <TextInput placeholder="Input" style={styles.inputStyle6}></TextInput>
+          <TextInput
+            placeholder="Input"
+            style={styles.inputStyle6}
+            value={nic}
+            onChangeText={(text) => setnic(text)}
+          ></TextInput>
         </View>
         <View style={styles.materialFixedLabelTextbox1Row}>
           <MaterialFixedLabelTextbox
@@ -77,6 +158,7 @@ function UpdateDriverProfile({ navigation }) {
           ></MaterialButtonViolet1> */}
         <TouchableOpacity
           style={[styles.containerbtnx, styles.materialButtonViolet1]}
+          onPress={onUpdateDriver}
         >
           <Text style={styles.update}>Update</Text>
         </TouchableOpacity>

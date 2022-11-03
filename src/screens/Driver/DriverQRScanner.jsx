@@ -34,8 +34,28 @@ export default function DriverQRScanner() {
       [
         {
           text: "Yes",
-          onPress: () => {
-            console.log("Yes button pressed");
+          onPress: async () => {
+            var token = await AsyncStorage.getItem("Token");
+            const data = {
+              QRToken: QRdata,
+            };
+            await axios
+              .post(
+                "https://ticketing-backend.azurewebsites.net/api/driver/passengerGetOff",
+                data,
+                {
+                  headers: {
+                    Authorization: token,
+                  },
+                }
+              )
+              .then((res) => {
+                if (res.data.status) {
+                  Alert.alert("Passenger Get Off Successfully");
+                } else {
+                  Alert.alert("Passenger Get Off Failed");
+                }
+              });
           },
         },
         {

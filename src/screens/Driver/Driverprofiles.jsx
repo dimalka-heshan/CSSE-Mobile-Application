@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -11,8 +11,33 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 function Driverprofiles({ navigation }) {
+  const [user, setUser] = useState("");
+  const GetDriver = async () => {
+    const Token = await AsyncStorage.getItem("Token");
+    await axios
+      .get("https://ticketing-backend.azurewebsites.net/api/user/profile", {
+        headers: {
+          Authorization: `${Token}`,
+        },
+      })
+      .then((res) => {
+        if (res.data.status) {
+          setUser(res.data.user);
+        }
+      })
+      .catch((err) => {
+        console.log({ Error: err });
+      });
+  };
+
+  useEffect(() => {
+    GetDriver();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.group2}>
@@ -56,7 +81,7 @@ function Driverprofiles({ navigation }) {
                 style={styles.icon4}
               ></FontAwesomeIcon>
             </TouchableOpacity>
-            <Text style={styles.nimnaThiranjaya1}>Nimna Thiranjaya</Text>
+            <Text style={styles.nimnaThiranjaya1}>{user.fullName}</Text>
             {/* <View style={styles.icon5Row}>
               <EntypoIcon name="users" style={styles.icon5}></EntypoIcon>
               <View style={styles.mobile1Column}></View>
@@ -67,14 +92,14 @@ function Driverprofiles({ navigation }) {
               <EntypoIcon name="users" style={styles.icon5}></EntypoIcon>
               <View style={styles.mobile1Column}>
                 <Text style={styles.mobile1}>Driver</Text>
-                <Text style={styles.loremIpsum3}>Nimna Thiranjaya</Text>
+                <Text style={styles.loremIpsum3}>{user.fullName}</Text>
               </View>
             </View>
             <View style={styles.icon6Row}>
               <FeatherIcon name="phone" style={styles.icon6}></FeatherIcon>
               <View style={styles.mobile1Column}>
                 <Text style={styles.mobile1}>Mobile</Text>
-                <Text style={styles.loremIpsum3}>0779875632</Text>
+                <Text style={styles.loremIpsum3}>{user.phoneNo}</Text>
               </View>
             </View>
             <View style={styles.icon7Row}>
@@ -84,14 +109,14 @@ function Driverprofiles({ navigation }) {
               ></EntypoIcon>
               <View style={styles.email1Column}>
                 <Text style={styles.email1}>Email</Text>
-                <Text style={styles.nkravindu1}>nkravindu7@gmail.com</Text>
+                <Text style={styles.nkravindu1}>{user.email}</Text>
               </View>
             </View>
             <View style={styles.icon8Row}>
               <EntypoIcon name="ticket" style={styles.icon8}></EntypoIcon>
               <View style={styles.nic1Column}>
                 <Text style={styles.nic1}>NIC</Text>
-                <Text style={styles.nkravindu2}>200003800910</Text>
+                <Text style={styles.nkravindu2}>{user.nic}</Text>
               </View>
             </View>
           </View>

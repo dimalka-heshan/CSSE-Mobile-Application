@@ -16,6 +16,7 @@ import { useRoute } from "@react-navigation/native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PassengerGetOnScreen = () => {
   const [value, setValue] = useState(null);
@@ -26,14 +27,17 @@ const PassengerGetOnScreen = () => {
   const [getOnBusHoltName, setgetOnBusHoltName] = useState("");
   const [getOffBusHoltName, setgetOffBusHoltName] = useState("");
   const [travelCost, settravelCost] = useState(null);
+  const [qrValue, setqrValue] = useState("");
 
   const route = useRoute();
 
   useEffect(() => {
     const getHolts = async () => {
+      const RouteID = await AsyncStorage.getItem("Route");
+      console.log(RouteID);
       await axios
         .get(
-          "https://ticketing-backend.azurewebsites.net/api/helper/getHoltsInRote/1"
+          `https://ticketing-backend.azurewebsites.net/api/helper/getHoltsInRote/${RouteID}`
         )
         .then((res) => {
           if (res.data.status) {
@@ -53,6 +57,7 @@ const PassengerGetOnScreen = () => {
         });
     };
     getHolts();
+    setqrValue(route.params.QRdata);
   }, []);
 
   const renderItem = (item) => {
@@ -82,6 +87,8 @@ const PassengerGetOnScreen = () => {
   const onSubmite = () => {
     if (getOnBusHolt === "" || getOffBusHolt === "") {
       return Alert.alert("Please Select Both Bus Holts");
+    } else if (getOnBusHolt === getOffBusHolt) {
+      return Alert.alert("Please Select Different Bus Holts");
     } else {
       setcardVisible(true);
       var totalLength = Math.abs((getOffBusHolt - getOnBusHolt) * 4);
@@ -96,8 +103,30 @@ const PassengerGetOnScreen = () => {
       [
         {
           text: "Yes",
-          onPress: () => {
-            console.log("Yes button pressed");
+          onPress: async () => {
+            const token = await AsyncStorage.getItem("Token");
+            const data = {
+              QRToken: qrValue,
+              getOnHoltID: getOnBusHolt,
+              getOffHoltID: getOffBusHolt,
+            };
+            await axios
+              .post(
+                "https://ticketing-backend.azurewebsites.net/api/driver/passengerGetOn",
+                data,
+                {
+                  headers: {
+                    Authorization: token,
+                  },
+                }
+              )
+              .then((res) => {
+                if (res.data.status) {
+                  Alert.alert("Passenger Get On Successfully");
+                } else {
+                  Alert.alert(res.data.message);
+                }
+              });
           },
         },
         {

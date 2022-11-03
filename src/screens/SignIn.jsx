@@ -30,7 +30,6 @@ export default function SignIn({ navigation }) {
         .then((res) => {
           if (res.data.status) {
             var token = res.data.token;
-            console.log(token);
             const storeData = async (value) => {
               try {
                 await AsyncStorage.setItem("Token", value);

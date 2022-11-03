@@ -20,40 +20,66 @@ import axios from "axios";
 const data = [
   {
     label: "Running",
-    value: "Running",
+    busState: "Running",
   },
   {
     label: "Stopped",
-    value: "Stopped",
+    busState: "Stopped",
   },
   {
     label: "Arrived",
-    value: "Arrived",
+    busState: "Arrived",
   },
 ];
 function BusProfiles({ navigation }) {
-  const [value, setValue] = useState(null);
-  const [token, setToken] = useState("");
-  const [busID, setBusID] = useState("");
+  const [bus, setbus] = useState("");
+  const [busState, setbusState] = useState("");
+  const [remaingSheet, setRemaingSheet] = useState(null);
 
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("Token");
-      if (value !== null) {
-        setToken(value);
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
+  const GetBusDetails = async () => {
+    const BusID = await AsyncStorage.getItem("BusID");
+
+    await axios
+      .get(
+        `https://ticketing-backend.azurewebsites.net/api/bus/getOneBus/${BusID}`
+      )
+      .then((res) => {
+        if (res.data.status) {
+          setbus(res.data.busdetails);
+          setbusState(res.data.busdetails.busState);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-  _retrieveData();
 
-  console.log(token);
+  const getRemainingSheets = async () => {
+    var BusID = await AsyncStorage.getItem("BusID");
+
+    await axios
+      .get(
+        `https://ticketing-backend.azurewebsites.net/api/bus/getOneBusTemp/${BusID}`
+      )
+      .then((res) => {
+        if (res.data.status) {
+          setRemaingSheet(res.data.bustempDetails.remainingSeats);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    GetBusDetails();
+    getRemainingSheets();
+  }, []);
   const renderItem = (item) => {
     return (
       <View style={styles.item}>
         <Text style={styles.textItem}>{item.label}</Text>
-        {item.value === value && (
+        {item.busState === busState && (
           <AntDesign
             style={styles.icon}
             color="black"
@@ -64,6 +90,31 @@ function BusProfiles({ navigation }) {
       </View>
     );
   };
+
+  const handleBusState = async () => {
+    var token = await AsyncStorage.getItem("Token");
+    await axios
+      .post(
+        `https://ticketing-backend.azurewebsites.net/api/driver/changeBusState`,
+        {
+          busState: busState,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.status) {
+          Alert.alert("Bus State Updated");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.group2}>
@@ -108,24 +159,36 @@ function BusProfiles({ navigation }) {
             contentContainerStyle={styles.scrollArea_contentContainerStyle}
           >
             <View style={styles.busNumber1Row}>
-              <Text style={styles.busNumber1}>Bus Number-</Text>
-              <Text style={styles.nd79602}>ND - 7960</Text>
+              <Text style={styles.busNumber1}>Bus Number -</Text>
+              <Text style={styles.nd79602}>{bus.busNumber}</Text>
             </View>
-            {/* <View style={styles.seatCount1Row}>
-              <Text style={styles.seatCount1}>Seat Count-</Text>
-              <Text style={styles.nd7960}>59</Text>
-            </View> */}
+            <View style={styles.seatCount1Row}>
+              <Text style={styles.seatCount1}>Seat Count -</Text>
+              <Text style={styles.nd7960}>{bus.sheetCount}</Text>
+            </View>
+            <View style={styles.seatCount1Row}>
+              <Text style={styles.seatCount1}>Seat Left -</Text>
+              {remaingSheet ? (
+                <Text style={styles.nd7960}>{remaingSheet}</Text>
+              ) : (
+                <Text style={styles.nd7960}>N/A</Text>
+              )}
+            </View>
             <View style={styles.busRoute1Row}>
               <Text style={styles.busRoute1}>Bus route -</Text>
-              <Text style={styles.nd7961}>177</Text>
+              <Text style={styles.nd7961}>{bus.route}</Text>
             </View>
             <View style={styles.busRoute1Row}>
               <Text style={styles.busRoute1}>Bus State -</Text>
-              <Text style={styles.nd7961}>Running</Text>
+              <Text style={styles.nd7961}>{bus.busState}</Text>
             </View>
             <View style={styles.totalEarning1Row}>
               <Text style={styles.totalEarning1}>Total Earning -</Text>
-              <Text style={styles.rs1}>Rs 50000.00</Text>
+              {bus.totalEarning ? (
+                <Text style={styles.rs1}>Rs. {bus.totalEarning}</Text>
+              ) : (
+                <Text style={styles.rs1}>Rs. 0.00</Text>
+              )}
             </View>
             <View style={styles.totalTrips1Row}>
               <Dropdown
@@ -142,11 +205,10 @@ function BusProfiles({ navigation }) {
                 placeholder="Change Bus State"
                 searchPlaceholder="Search..."
                 statusBarIsTranslucent={true}
-                value={value}
+                value={busState}
                 renderItem={renderItem}
                 onChange={(item) => {
-                  setgetOnBusHolt(item.value);
-                  setgetOnBusHoltName(item.label);
+                  setbusState(item.busState);
                 }}
                 renderLeftIcon={() => (
                   <AntDesign
@@ -157,8 +219,12 @@ function BusProfiles({ navigation }) {
                   />
                 )}
               />
+
               <View style={styles.buttoncontainer}>
-                <TouchableOpacity style={styles.buttonok}>
+                <TouchableOpacity
+                  style={styles.buttonok}
+                  onPress={handleBusState}
+                >
                   <Text style={styles.text}>Submit</Text>
                 </TouchableOpacity>
               </View>
@@ -327,7 +393,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
   },
   scrollArea_contentContainerStyle: {
-    height: 245,
+    height: 450,
     width: 343,
   },
   busNumber1: {

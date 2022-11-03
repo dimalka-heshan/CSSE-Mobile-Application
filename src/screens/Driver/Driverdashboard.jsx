@@ -14,44 +14,43 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 function Driverdashboard({ navigation }) {
-  const [token, setToken] = useState("");
-
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("Token");
-      if (value !== null) {
-        setToken(value);
+  const getbusID = async () => {
+    const Token = await AsyncStorage.getItem("Token");
+    const storeData = async (value) => {
+      try {
+        await AsyncStorage.setItem("BusID", value);
+      } catch (e) {
+        console.log(e);
       }
-    } catch (error) {
-      // Error retrieving data
-    }
+    };
+    const storeData2 = async (value) => {
+      try {
+        await AsyncStorage.setItem("Route", value);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    await axios
+      .get("https://ticketing-backend.azurewebsites.net/api/user/profile", {
+        headers: {
+          Authorization: `${Token}`,
+        },
+      })
+      .then((res) => {
+        var busID = res.data.user.busDetails._id;
+        var routID = res.data.user.busDetails.route.toString();
+        storeData(busID);
+        storeData2(routID);
+      })
+      .catch((err) => {
+        console.log({ Error: err });
+      });
   };
-  _retrieveData();
 
   useEffect(() => {
-    const getbusID = async () => {
-      await axios
-        .get(
-          "https://ticketing-backend.azurewebsites.net/api/user/profile",
-          {},
-          {
-            headers: {
-              Authorization: `${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log({ data: res.data });
-        })
-        .catch((err) => {
-          console.log({ Error: err });
-        });
-    };
-
     getbusID();
   }, []);
 
-  console.log("Token", token);
   return (
     <View style={styles.container}>
       <View style={styles.group2}>
