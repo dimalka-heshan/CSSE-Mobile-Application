@@ -1,10 +1,32 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
+import { useRoute } from "@react-navigation/native";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import moment from "moment";
 
-function Travelhistory({navigation}) {
+function Travelhistory({ navigation }) {
+  const [travelData, settravelData] = useState([]);
+  const route = useRoute();
+
+  useEffect(() => {
+    var fromID = route.params.fromID;
+    var toID = route.params.toID;
+
+    var distance = Math.abs(fromID - toID) * 3;
+    const data = {
+      from: route.params.from,
+      to: route.params.to,
+      busRoute: route.params.busRoute,
+      departureTime: route.params.departureTime,
+      price: route.params.price,
+      distance: distance,
+      arrivalTime: route.params.arrivalTime,
+    };
+    settravelData(data);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.group11}>
@@ -60,7 +82,7 @@ function Travelhistory({navigation}) {
                       style={styles.icon4}
                     ></EntypoIcon>
                   </View>
-                  <Text style={styles.matara}>Matara</Text>
+                  <Text style={styles.matara}>{travelData.from}</Text>
                 </View>
               </View>
             </View>
@@ -77,7 +99,7 @@ function Travelhistory({navigation}) {
                     ></FontAwesomeIcon>
                   </View>
                   <View style={styles.group7}>
-                    <Text style={styles.kaduwela}>Kaduwela</Text>
+                    <Text style={styles.kaduwela}>{travelData.to}</Text>
                   </View>
                 </View>
               </View>
@@ -92,7 +114,7 @@ function Travelhistory({navigation}) {
                     style={styles.icon6}
                   ></MaterialCommunityIconsIcon>
                   <Text style={styles.busRoute1390}>Bus Route -</Text>
-                  <Text style={styles.distance605}>Distance</Text>
+                  <Text style={styles.distance605}>{travelData.busRoute}</Text>
                 </View>
                 <View style={styles.icon7Row}>
                   <MaterialCommunityIconsIcon
@@ -100,7 +122,12 @@ function Travelhistory({navigation}) {
                     style={styles.icon7}
                   ></MaterialCommunityIconsIcon>
                   <Text style={styles.departure604}>Departure -</Text>
-                  <Text style={styles.busRoute1386}>07.00am</Text>
+                  <Text style={styles.busRoute1386}>
+                    {" "}
+                    {travelData.departureTime
+                      ? moment(travelData.departureTime).format("h:mm:ss a")
+                      : "N/A"}
+                  </Text>
                 </View>
                 <View style={styles.icon9Row}>
                   <MaterialCommunityIconsIcon
@@ -109,7 +136,9 @@ function Travelhistory({navigation}) {
                   ></MaterialCommunityIconsIcon>
                   <Text style={styles.distance604}>Distance -</Text>
                   <View style={styles.group9}>
-                    <Text style={styles.busRoute1388}>50 Km</Text>
+                    <Text style={styles.busRoute1388}>
+                      {travelData.distance} Km
+                    </Text>
                   </View>
                 </View>
                 <View style={styles.icon8Row}>
@@ -118,7 +147,11 @@ function Travelhistory({navigation}) {
                     style={styles.icon8}
                   ></MaterialCommunityIconsIcon>
                   <Text style={styles.arrival1004}>Arrival -</Text>
-                  <Text style={styles.busRoute1387}>11.00am</Text>
+                  <Text style={styles.busRoute1387}>
+                    {travelData.arrivalTime
+                      ? moment(travelData.arrivalTime).format("h:mm:ss a")
+                      : "N/A"}
+                  </Text>
                 </View>
                 <View style={styles.icon10Row}>
                   <EntypoIcon
@@ -126,34 +159,45 @@ function Travelhistory({navigation}) {
                     style={styles.icon10}
                   ></EntypoIcon>
                   <Text style={styles.ticketPrice4}>Ticket Price</Text>
-                  <Text style={styles.rs150000}>Rs. 1500.00</Text>
+                  <Text style={styles.rs150000}>Rs. {travelData.price}</Text>
                 </View>
               </View>
             </View>
           </View>
-          <View style={[styles.container1, styles.materialIconTextButtonsFooter1]}>
-      <TouchableOpacity style={styles.buttonWrapper1} onPress={() => navigation.navigate('FUserHome')}>
-        <MaterialCommunityIconsIcon
-          name="camera-timer"
-          style={styles.icon11}
-        ></MaterialCommunityIconsIcon>
-        <Text style={styles.dashboar}>Dashboar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.activeButtonWrapper} onPress={() => navigation.navigate('LMyQr')}>
-        <MaterialCommunityIconsIcon
-          name="qrcode"
-          style={styles.activeIcon}
-        ></MaterialCommunityIconsIcon>
-        <Text style={styles.myQr}>My QR</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonWrapper2} onPress={() => navigation.navigate('LocalPasengerProfiles')}>
-        <MaterialCommunityIconsIcon
-          name="account"
-          style={styles.icon22}
-        ></MaterialCommunityIconsIcon>
-        <Text style={styles.profile1}>Profile</Text>
-      </TouchableOpacity>
-      </View>
+          <View
+            style={[styles.container1, styles.materialIconTextButtonsFooter1]}
+          >
+            <TouchableOpacity
+              style={styles.buttonWrapper1}
+              onPress={() => navigation.navigate("LUserHome")}
+            >
+              <MaterialCommunityIconsIcon
+                name="camera-timer"
+                style={styles.icon11}
+              ></MaterialCommunityIconsIcon>
+              <Text style={styles.dashboar}>Dashboar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.activeButtonWrapper}
+              onPress={() => navigation.navigate("LMyQr")}
+            >
+              <MaterialCommunityIconsIcon
+                name="qrcode"
+                style={styles.activeIcon}
+              ></MaterialCommunityIconsIcon>
+              <Text style={styles.myQr}>My QR</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonWrapper2}
+              onPress={() => navigation.navigate("LocalPasengerProfiles")}
+            >
+              <MaterialCommunityIconsIcon
+                name="account"
+                style={styles.icon22}
+              ></MaterialCommunityIconsIcon>
+              <Text style={styles.profile1}>Profile</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -163,17 +207,17 @@ function Travelhistory({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   group11: {
     width: 393,
     height: 851,
     justifyContent: "center",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   group5: {
     width: 393,
-    height: 851
+    height: 851,
   },
   rect1: {
     top: 0,
@@ -181,107 +225,107 @@ const styles = StyleSheet.create({
     height: 185,
     position: "absolute",
     backgroundColor: "rgba(0,0,0,1)",
-    left: 0
+    left: 0,
   },
   group1: {
     width: 243,
     height: 55,
     marginTop: 56,
-    marginLeft: 75
+    marginLeft: 75,
   },
   sIpsum1: {
     top: 23,
     left: 24,
     position: "absolute",
-    color: "#121212"
+    color: "#121212",
   },
   icon2: {
     top: 0,
     left: 11,
     position: "absolute",
     color: "rgba(208,2,27,1)",
-    fontSize: 27
+    fontSize: 27,
   },
   icon3: {
     top: 23,
     left: 0,
     position: "absolute",
     color: "rgba(74,144,226,1)",
-    fontSize: 34
+    fontSize: 34,
   },
   sIpsum1Stack: {
     top: 0,
     left: 19,
     width: 27,
     height: 57,
-    position: "absolute"
+    position: "absolute",
   },
   icon1: {
     top: 6,
     left: 0,
     position: "absolute",
     color: "rgba(255,255,255,1)",
-    fontSize: 30
+    fontSize: 30,
   },
   sIpsum1StackStack: {
     width: 46,
-    height: 57
+    height: 57,
   },
   loremIpsum1: {
     top: 13,
     left: 13,
     position: "absolute",
-    color: "#121212"
+    color: "#121212",
   },
   group6: {
     top: 0,
     left: 0,
     width: 140,
     height: 26,
-    position: "absolute"
+    position: "absolute",
   },
   stsSriLanka1: {
     color: "rgba(255,255,255,1)",
-    fontSize: 21
+    fontSize: 21,
   },
   loremIpsum1Stack: {
     width: 140,
     height: 26,
-    marginLeft: 12
+    marginLeft: 12,
   },
   loremIpsum2: {
     color: "rgba(255,255,255,1)",
-    fontSize: 12
+    fontSize: 12,
   },
   loremIpsum1StackColumn: {
     width: 195,
     marginLeft: 2,
     marginTop: 13,
-    marginBottom: 4
+    marginBottom: 4,
   },
   sIpsum1StackStackRow: {
     height: 57,
-    flexDirection: "row"
+    flexDirection: "row",
   },
   text: {
     color: "rgba(255,255,255,1)",
     fontSize: 24,
     marginTop: 35,
-    marginLeft: 16
+    marginLeft: 16,
   },
   image: {
     top: 137,
     left: 47,
     width: 289,
     height: 210,
-    position: "absolute"
+    position: "absolute",
   },
   group2: {
     top: 308,
     left: 22,
     width: 338,
     height: 95,
-    position: "absolute"
+    position: "absolute",
   },
   rect2: {
     width: 338,
@@ -291,20 +335,20 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(155,155,155,1)",
     shadowOffset: {
       width: 3,
-      height: 3
+      height: 3,
     },
     elevation: 21,
     shadowOpacity: 1,
     shadowRadius: 7,
-    flexDirection: "row"
+    flexDirection: "row",
   },
   from: {
     top: 0,
     left: 0,
     position: "absolute",
     color: "#121212",
-    width:1000,
-    fontSize: 18
+    width: 1000,
+    fontSize: 18,
   },
   icon4: {
     top: 20,
@@ -313,17 +357,17 @@ const styles = StyleSheet.create({
     color: "rgba(208,2,27,1)",
     fontSize: 35,
     height: 38,
-    width: 35
+    width: 35,
   },
   fromStack: {
     width: 42,
-    height: 58
+    height: 58,
   },
   matara: {
     color: "#121212",
     fontSize: 18,
-    marginLeft: 46,
-    marginTop: 22
+    marginLeft: 10,
+    marginTop: 22,
   },
   fromStackRow: {
     height: 58,
@@ -331,22 +375,22 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 112,
     marginLeft: 81,
-    marginTop: 13
+    marginTop: 13,
   },
   rect1Stack: {
     width: 393,
-    height: 403
+    height: 403,
   },
   group3: {
     width: 338,
     height: 88,
     justifyContent: "center",
     marginTop: 1,
-    marginLeft: 22
+    marginLeft: 22,
   },
   group10: {
     width: 338,
-    height: 88
+    height: 88,
   },
   rect3: {
     width: 338,
@@ -356,53 +400,53 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(155,155,155,1)",
     shadowOffset: {
       width: 3,
-      height: 3
+      height: 3,
     },
     elevation: 15,
     shadowOpacity: 1,
-    shadowRadius: 5
+    shadowRadius: 5,
   },
   to2: {
     color: "#121212",
     fontSize: 18,
-    marginLeft: 6
+    marginLeft: 6,
   },
   icon5: {
     color: "rgba(128,128,128,1)",
     fontSize: 35,
     height: 35,
-    width: 28
+    width: 28,
   },
   to2Column: {
-    width: 28
+    width: 28,
   },
   group7: {
-    width: 78,
+    width: 150,
     height: 22,
-    marginLeft: 55,
-    marginTop: 20
+    marginLeft: 20,
+    marginTop: 20,
   },
   kaduwela: {
     color: "#121212",
-    fontSize: 18
+    fontSize: 18,
   },
   to2ColumnRow: {
     height: 57,
     flexDirection: "row",
     marginTop: 15,
     marginLeft: 86,
-    marginRight: 91
+    marginRight: 91,
   },
   group4: {
     width: 343,
     height: 246,
     marginTop: 13,
-    marginLeft: 25
+    marginLeft: 25,
   },
   group8: {
     width: 343,
     height: 246,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   rect4: {
     width: 343,
@@ -412,145 +456,145 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(155,155,155,1)",
     shadowOffset: {
       width: 3,
-      height: 3
+      height: 3,
     },
     elevation: 27,
     shadowOpacity: 1,
-    shadowRadius: 9
+    shadowRadius: 9,
   },
   icon6: {
     color: "rgba(74,144,226,1)",
     fontSize: 35,
     height: 38,
-    width: 35
+    width: 35,
   },
   busRoute1390: {
     color: "#121212",
     fontSize: 18,
     marginLeft: 14,
-    marginTop: 10
+    marginTop: 10,
   },
   distance605: {
     color: "#121212",
     fontSize: 17,
     marginLeft: 5,
-    marginTop: 10
+    marginTop: 10,
   },
   icon6Row: {
     height: 38,
     flexDirection: "row",
     marginTop: 5,
     marginLeft: 30,
-    marginRight: 102
+    marginRight: 102,
   },
   icon7: {
     color: "rgba(74,144,226,1)",
     fontSize: 35,
     height: 38,
-    width: 35
+    width: 35,
   },
   departure604: {
     color: "#121212",
     fontSize: 18,
     marginLeft: 11,
-    marginTop: 8
+    marginTop: 8,
   },
   busRoute1386: {
     color: "#121212",
     fontSize: 17,
     marginLeft: 8,
-    marginTop: 8
+    marginTop: 8,
   },
   icon7Row: {
     height: 38,
     flexDirection: "row",
     marginTop: 10,
     marginLeft: 33,
-    marginRight: 101
+    marginRight: 101,
   },
   icon9: {
     color: "rgba(123,190,46,1)",
     fontSize: 35,
     height: 38,
-    width: 35
+    width: 35,
   },
   distance604: {
     color: "#121212",
     fontSize: 18,
     marginLeft: 15,
-    marginTop: 8
+    marginTop: 8,
   },
   group9: {
     width: 49,
     height: 20,
     marginLeft: 17,
-    marginTop: 10
+    marginTop: 10,
   },
   busRoute1388: {
     color: "#121212",
-    fontSize: 17
+    fontSize: 17,
   },
   icon9Row: {
     height: 38,
     flexDirection: "row",
     marginTop: 2,
     marginLeft: 29,
-    marginRight: 119
+    marginRight: 119,
   },
   icon8: {
     color: "rgba(208,2,27,1)",
     fontSize: 35,
     height: 38,
-    width: 35
+    width: 35,
   },
   arrival1004: {
     color: "#121212",
     fontSize: 18,
     marginLeft: 11,
-    marginTop: 8
+    marginTop: 8,
   },
   busRoute1387: {
     color: "#121212",
     fontSize: 17,
     marginLeft: 36,
-    marginTop: 8
+    marginTop: 8,
   },
   icon8Row: {
     height: 38,
     flexDirection: "row",
     marginTop: 8,
     marginLeft: 33,
-    marginRight: 101
+    marginRight: 101,
   },
   icon10: {
     color: "rgba(128,128,128,1)",
     fontSize: 35,
     height: 38,
-    width: 35
+    width: 35,
   },
   ticketPrice4: {
     color: "#121212",
     fontSize: 18,
-    marginTop: 9
+    marginTop: 9,
   },
   rs150000: {
     color: "#121212",
     fontSize: 17,
     marginLeft: 11,
-    marginTop: 9
+    marginTop: 9,
   },
   icon10Row: {
     height: 38,
     flexDirection: "row",
     marginTop: 8,
     marginLeft: 53,
-    marginRight: 58
+    marginRight: 58,
   },
   materialIconTextButtonsFooter1: {
     height: 56,
     width: 393,
     backgroundColor: "rgba(0,0,0,1)",
-    marginTop: 20
+    marginTop: 20,
   },
   container1: {
     backgroundColor: "#FFF",
@@ -558,11 +602,11 @@ const styles = StyleSheet.create({
     shadowColor: "#111",
     shadowOffset: {
       width: 0,
-      height: -2
+      height: -2,
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.2,
-    elevation: 3
+    elevation: 3,
   },
   buttonWrapper1: {
     flex: 1,
@@ -571,19 +615,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     minWidth: 80,
     maxWidth: 168,
-    alignItems: "center"
+    alignItems: "center",
   },
   icon11: {
     backgroundColor: "transparent",
     color: "rgba(255,255,255,1)",
     fontSize: 24,
-    opacity: 0.8
+    opacity: 0.8,
   },
   dashboar: {
     fontSize: 12,
     color: "rgba(255,255,255,1)",
     backgroundColor: "transparent",
-    paddingTop: 4
+    paddingTop: 4,
   },
   activeButtonWrapper: {
     flex: 1,
@@ -592,19 +636,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     minWidth: 80,
     maxWidth: 168,
-    alignItems: "center"
+    alignItems: "center",
   },
   activeIcon: {
     backgroundColor: "transparent",
     color: "rgba(255,255,255,1)",
     fontSize: 24,
-    opacity: 0.8
+    opacity: 0.8,
   },
   myQr: {
     fontSize: 12,
     color: "rgba(255,255,255,1)",
     backgroundColor: "transparent",
-    paddingTop: 4
+    paddingTop: 4,
   },
   buttonWrapper2: {
     flex: 1,
@@ -613,20 +657,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     minWidth: 80,
     maxWidth: 168,
-    alignItems: "center"
+    alignItems: "center",
   },
   icon22: {
     backgroundColor: "transparent",
     color: "rgba(255,255,255,1)",
     fontSize: 24,
-    opacity: 0.8
+    opacity: 0.8,
   },
   profile1: {
     fontSize: 12,
     color: "rgba(255,255,255,1)",
     backgroundColor: "transparent",
-    paddingTop: 4
-  }
+    paddingTop: 4,
+  },
 });
 
 export default Travelhistory;

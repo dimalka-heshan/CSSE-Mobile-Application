@@ -30,9 +30,19 @@ export default function SignIn({ navigation }) {
         .then((res) => {
           if (res.data.status) {
             var token = res.data.token;
+            var role = res.data.role;
+            console.log(role);
             const storeData = async (value) => {
               try {
                 await AsyncStorage.setItem("Token", value);
+              } catch (e) {
+                console.log(e);
+              }
+            };
+
+            const storeRole = async (value) => {
+              try {
+                await AsyncStorage.setItem("Role", value);
               } catch (e) {
                 console.log(e);
               }
@@ -44,7 +54,19 @@ export default function SignIn({ navigation }) {
                 navigation.navigate("Driverdashboard");
                 break;
               case "Admin":
-                console.log("Admin");
+                Alert.alert("You are not allowed to access this Application");
+                break;
+              case "LocalPassenger":
+                AsyncStorage.clear();
+                storeData(token);
+                storeRole(role);
+                navigation.navigate("LUserHome");
+                break;
+              case "ForeignPassenger":
+                AsyncStorage.clear();
+                storeData(token);
+                storeRole(role);
+                navigation.navigate("FUserHome");
                 break;
               default:
                 console.log("User");

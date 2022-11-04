@@ -244,7 +244,7 @@ function BusProfiles({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btnWrapper2}
-            onPress={() => navigation.navigate("ForignPassengerUpdate")}
+            onPress={() => navigation.navigate("DriverQRScanner")}
           >
             <MaterialCommunityIconsIcon
               name="qrcode-scan"

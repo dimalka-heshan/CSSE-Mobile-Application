@@ -1,7 +1,14 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Image, Text, TouchableOpacity, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 
-function LandingPage({navigation}) {
+function LandingPage({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.imageStack}>
@@ -15,12 +22,12 @@ function LandingPage({navigation}) {
           Smart Transport System - Sri Lanka
         </Text>
       </View>
-    <TouchableOpacity 
-      style={[styles.containerx,styles.materialButtonDark]}
-      onPress={() => navigation.navigate('SignIn')}
+      <TouchableOpacity
+        style={[styles.containerx, styles.materialButtonDark]}
+        onPress={() => navigation.navigate("SignIn")}
       >
-      <Text style={styles.letsGetStarted}>Lets Get Started</Text>
-    </TouchableOpacity>
+        <Text style={styles.letsGetStarted}>Lets Get Started</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -28,25 +35,25 @@ function LandingPage({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(238,238,30,1)"
+    backgroundColor: "rgba(238,238,30,1)",
   },
   image: {
     top: 0,
     width: 425,
     height: 356,
     position: "absolute",
-    left: 0
+    left: 0,
   },
   loremIpsum: {
     top: 319,
     left: 6,
-    fontWeight:"bold",
+    fontWeight: "bold",
     position: "absolute",
     color: "#121212",
     height: 58,
     width: 412,
     textAlign: "center",
-    fontSize: 23
+    fontSize: 23,
   },
   loremIpsum2: {
     top: 350,
@@ -55,13 +62,13 @@ const styles = StyleSheet.create({
     color: "rgba(208,2,27,1)",
     height: 35,
     width: 322,
-    textAlign: "center"
+    textAlign: "center",
   },
   imageStack: {
     width: 425,
     height: 395,
     marginTop: 133,
-    marginLeft: -16
+    marginLeft: -16,
   },
   materialButtonDark: {
     height: 60,
@@ -70,13 +77,13 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(0,0,0,1)",
     shadowOffset: {
       width: 3,
-      height: 3
+      height: 3,
     },
     elevation: 5,
     shadowOpacity: 1,
     shadowRadius: 0,
     marginTop: 72,
-    marginLeft: 27
+    marginLeft: 27,
   },
   containerx: {
     backgroundColor: "#212121",
@@ -87,21 +94,20 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     shadowOpacity: 0.35,
     shadowRadius: 5,
     elevation: 2,
     minWidth: 88,
     paddingLeft: 16,
-    paddingRight: 16
+    paddingRight: 16,
   },
   letsGetStarted: {
     color: "rgba(255,255,255,1)",
     fontSize: 18,
-    lineHeight: 18
-  }
-
+    lineHeight: 18,
+  },
 });
 
 export default LandingPage;
