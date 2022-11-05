@@ -67,7 +67,7 @@ function UpdateDriverProfile({ navigation }) {
       .then((res) => {
         if (res.data.status) {
           Alert.alert("Profile Updated");
-          navigation.navigate("Driverprofiles");
+          navigation.push("Driverprofiles");
         }
       })
       .catch((err) => {

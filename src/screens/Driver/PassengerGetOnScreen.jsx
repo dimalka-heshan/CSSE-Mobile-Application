@@ -124,8 +124,11 @@ const PassengerGetOnScreen = () => {
                 if (res.data.status) {
                   Alert.alert("Passenger Get On Successfully");
                 } else {
-                  Alert.alert(res.data.message);
+                  Alert.alert("insufficient credit balance");
                 }
+              })
+              .catch((err) => {
+                Alert.alert("insufficient credit balance");
               });
           },
         },
@@ -171,7 +174,6 @@ const PassengerGetOnScreen = () => {
         <Text style={styles.dashboard}>Travel Details</Text>
       </View>
 
-      <Text>{route.params.QRdata}</Text>
       <Card style={styles.card}>
         <Card.Content>
           <Title style={styles.cardTitle}>Add Travel Details</Title>

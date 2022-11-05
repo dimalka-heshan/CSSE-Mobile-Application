@@ -13,21 +13,33 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { useNavigation } from "@react-navigation/core";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import axios from "axios";
 
 export default function DriverQRScanner() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState("Waiting for QR code");
   const [QRdata, setQRdata] = useState("");
+  const [token, settoken] = useState("");
 
   const navigation = useNavigation();
+
+  const gettoken = async () => {
+    const token = await AsyncStorage.getItem("Token");
+    settoken(token);
+  };
+
+  useEffect(() => {
+    gettoken();
+  }, []);
 
   const UserGetonBtnClick = () => {
     navigation.navigate("PassengerGetOnScreen", { QRdata });
   };
 
-  const userGetoff = () => {
+  const userGetoff = async () => {
     return Alert.alert(
       "Are your sure?",
       "Is This passenger going to get off the bus ?",
@@ -35,10 +47,8 @@ export default function DriverQRScanner() {
         {
           text: "Yes",
           onPress: async () => {
-            var token = await AsyncStorage.getItem("Token");
-            const data = {
-              QRToken: QRdata,
-            };
+            const data = { QRToken: QRdata };
+
             await axios
               .post(
                 "https://ticketing-backend.azurewebsites.net/api/driver/passengerGetOff",
@@ -50,11 +60,14 @@ export default function DriverQRScanner() {
                 }
               )
               .then((res) => {
-                if (res.data.status) {
-                  Alert.alert("Passenger Get Off Successfully");
+                if (res.data.success) {
+                  Alert.alert("Passenger Get Off");
                 } else {
                   Alert.alert("Passenger Get Off Failed");
                 }
+              })
+              .catch((err) => {
+                Alert.alert("Passenger Get Off Failed");
               });
           },
         },
@@ -156,11 +169,11 @@ export default function DriverQRScanner() {
       <Text style={styles.qrTextStatus}>{text}</Text>
       {scanned && (
         <View>
-          {/* <Button
+          <Button
             title={"Scan again?"}
             onPress={handleScanAgain}
             color="tomato"
-          /> */}
+          />
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={UserGetonBtnClick}
@@ -254,7 +267,7 @@ const styles = StyleSheet.create({
     width: "60%",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: -18,
+    marginTop: -8,
   },
   button: {
     width: "100%",

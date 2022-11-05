@@ -108,6 +108,7 @@ function BusProfiles({ navigation }) {
       .then((res) => {
         if (res.data.status) {
           Alert.alert("Bus State Updated");
+          navigation.push("BusProfiles");
         }
       })
       .catch((err) => {
