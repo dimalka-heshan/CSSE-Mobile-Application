@@ -1,28 +1,37 @@
 import React, { Component } from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
 
-function CupertinoButtonSuccess1(props) {
+function MaterialButtonViolet3(props) {
   return (
     <TouchableOpacity style={[styles.container, props.style]}>
-      <Text style={styles.signIn}>Sign in</Text>
+      <Text style={styles.payNow}>Pay Now</Text>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#4CD964",
+    backgroundColor: "rgba(74,144,226,1)",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    borderRadius: 5,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 5,
+    elevation: 2,
+    minWidth: 88,
     paddingLeft: 16,
     paddingRight: 16
   },
-  signIn: {
+  payNow: {
     color: "#fff",
-    fontSize: 17
+    fontSize: 14
   }
 });
 
-export default CupertinoButtonSuccess1;
+export default MaterialButtonViolet3;
