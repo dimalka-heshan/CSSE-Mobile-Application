@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import SignIn from "./src/screens/SignIn";
 import LandingPage from "./src/screens/LandingPage";
@@ -35,160 +35,181 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen 
-            name="LandingPage" 
-            component={LandingPage}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="SignIn" 
-            component={SignIn}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="LUserHome" 
-            component={LUserHome}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="FUserHome" 
-            component={FUserHome}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="MyQr" 
-            component={MyQr}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="LMyQr" 
-            component={LMyQr}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="FMyQr" 
-            component={FMyQr}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="FSignUp" 
-            component={FSignUp}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="LSignUp" 
-            component={LSignUp}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="PSelect" 
-            component={PSelect}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="LocalPasengerProfiles" 
-            component={LocalPasengerProfiles}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="Travelhistory" 
-            component={Travelhistory}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="FTravelhistory" 
-            component={FTravelhistory}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="LTravelhistory" 
-            component={LTravelhistory}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="LocalPasengerUpdate" 
-            component={LocalPasengerUpdate}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="ForignPassengerProfile" 
-            component={ForignPassengerProfile}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="ForignPassengerUpdate" 
-            component={ForignPassengerUpdate}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="Driverdashboard" 
-            component={Driverdashboard}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="Driverprofiles" 
-            component={Driverprofiles}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="UpdateDriverProfile" 
-            component={UpdateDriverProfile}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen 
-            name="BusProfiles" 
-            component={BusProfiles}
-            options = {{
-              headerShown: false,
-          }} />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="DriverQRScanner"
-            component={DriverQRScanner}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="PassengerGetOnScreen"
-            component={PassengerGetOnScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Alltravelhistory"
-            component={Alltravelhistory}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Credits"
-            component={Credits}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Payment"
-            component={Payment}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="LandingPage"
+          component={LandingPage}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="LUserHome"
+          component={LUserHome}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="FUserHome"
+          component={FUserHome}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="MyQr"
+          component={MyQr}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="LMyQr"
+          component={LMyQr}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="FMyQr"
+          component={FMyQr}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="FSignUp"
+          component={FSignUp}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="LSignUp"
+          component={LSignUp}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="PSelect"
+          component={PSelect}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="LocalPasengerProfiles"
+          component={LocalPasengerProfiles}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Travelhistory"
+          component={Travelhistory}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="FTravelhistory"
+          component={FTravelhistory}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="LTravelhistory"
+          component={LTravelhistory}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="LocalPasengerUpdate"
+          component={LocalPasengerUpdate}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ForignPassengerProfile"
+          component={ForignPassengerProfile}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ForignPassengerUpdate"
+          component={ForignPassengerUpdate}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Driverdashboard"
+          component={Driverdashboard}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Driverprofiles"
+          component={Driverprofiles}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="UpdateDriverProfile"
+          component={UpdateDriverProfile}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="BusProfiles"
+          component={BusProfiles}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="DriverQRScanner"
+          component={DriverQRScanner}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="PassengerGetOnScreen"
+          component={PassengerGetOnScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Alltravelhistory"
+          component={Alltravelhistory}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Credits"
+          component={Credits}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Payment"
+          component={Payment}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }

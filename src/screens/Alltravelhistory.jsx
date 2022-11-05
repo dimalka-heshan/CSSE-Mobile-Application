@@ -1,17 +1,53 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
   Text,
   Image,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
-import MaterialIconTextButtonsFooter3 from "../components/MaterialIconTextButtonsFooter3";
+import MaterialCommunityIconsIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Moment from "moment";
+import trancate from "truncate";
+import axios from "axios";
 
-function Alltravelhistory({navigation}) {
+function Alltravelhistory({ navigation }) {
+  const [role, setrole] = useState("");
+  const [travelHistory, settravelHistory] = useState([]);
+
+  const getRole = async () => {
+    const value = await AsyncStorage.getItem("Role");
+    setrole(value);
+  };
+
+  useEffect(() => {
+    getRole();
+    getAllTravelHistory();
+  }, []);
+
+  const getAllTravelHistory = async () => {
+    const token = await AsyncStorage.getItem("Token");
+
+    axios
+      .get(
+        "https://ticketing-backend.azurewebsites.net/api/user/getTravelHistoryBytoken",
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.status) {
+          settravelHistory(res.data.travelHistory);
+        }
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.group6}>
@@ -62,59 +98,101 @@ function Alltravelhistory({navigation}) {
             <View style={styles.group5}>
               <View style={styles.group3}>
                 <View style={styles.group4}>
-                  <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Travelhistory')}>
-                    <View style={styles.loremIpsum5Row}>
-                      <Text style={styles.loremIpsum5}>2022.10.05</Text>
-                      <Text style={styles.galle}>Galle</Text>
-                      <Text style={styles.to8}>To</Text>
-                      <Text style={styles.kaduwela}>Kaduwela</Text>
-                      <Text style={styles.loremIpsum6}>07:42:04</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Travelhistory')}>
-                    <View style={styles.loremIpsum5Row}>
-                      <Text style={styles.loremIpsum5}>2022.10.05</Text>
-                      <Text style={styles.galle}>Galle</Text>
-                      <Text style={styles.to8}>To</Text>
-                      <Text style={styles.kaduwela}>Kaduwela</Text>
-                      <Text style={styles.loremIpsum6}>07:42:04</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Travelhistory')}>
-                    <View style={styles.loremIpsum5Row}>
-                      <Text style={styles.loremIpsum5}>2022.10.05</Text>
-                      <Text style={styles.galle}>Galle</Text>
-                      <Text style={styles.to8}>To</Text>
-                      <Text style={styles.kaduwela}>Kaduwela</Text>
-                      <Text style={styles.loremIpsum6}>07:42:04</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Travelhistory')}>
-                    <View style={styles.loremIpsum5Row}>
-                      <Text style={styles.loremIpsum5}>2022.10.05</Text>
-                      <Text style={styles.galle}>Galle</Text>
-                      <Text style={styles.to8}>To</Text>
-                      <Text style={styles.kaduwela}>Kaduwela</Text>
-                      <Text style={styles.loremIpsum6}>07:42:04</Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Travelhistory')}>
-                    <View style={styles.loremIpsum5Row}>
-                      <Text style={styles.loremIpsum5}>2022.10.05</Text>
-                      <Text style={styles.galle}>Galle</Text>
-                      <Text style={styles.to8}>To</Text>
-                      <Text style={styles.kaduwela}>Kaduwela</Text>
-                      <Text style={styles.loremIpsum6}>07:42:04</Text>
-                    </View>
-                  </TouchableOpacity>
+                  {travelHistory.map((item, index) => (
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => {
+                        role == "LocalPassenger"
+                          ? navigation.navigate("LTravelhistory", {
+                              from: item.getOnHoltName,
+                              to: item.getOffHoltName,
+                              busRoute: item.routeNo,
+                              departureTime: item.getOnTime,
+                              fromID: item.getOnHoltID,
+                              toID: item.getOffHoltID,
+                              price: item.ticketPrice,
+                              arrivalTime: item.getOffTime,
+                            })
+                          : navigation.navigate("FTravelhistory", {
+                              from: item.getOnHoltName,
+                              to: item.getOffHoltName,
+                              busRoute: item.routeNo,
+                              departureTime: item.getOnTime,
+                              fromID: item.getOnHoltID,
+                              toID: item.getOffHoltID,
+                              price: item.ticketPrice,
+                              arrivalTime: item.getOffTime,
+                            });
+                      }}
+                    >
+                      <View style={styles.loremIpsum5Row}>
+                        <Text style={styles.loremIpsum5}>
+                          {Moment(item.createdAt).format("YYYY-MM-DD")}
+                        </Text>
+                        <Text style={styles.galle}>
+                          {trancate(item.getOnHoltName || "", 9)}
+                        </Text>
+                        <Text style={styles.to8}>To</Text>
+                        <Text style={styles.kaduwela}>
+                          {trancate(item.getOffHoltName || "", 9)}
+                        </Text>
+                        <Text style={styles.loremIpsum6}>
+                          {Moment(item.createdAt).format("HH.MM.ss")}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
                 </View>
               </View>
             </View>
           </ScrollView>
         </View>
-        <MaterialIconTextButtonsFooter3
-          style={styles.materialIconTextButtonsFooter1}
-        ></MaterialIconTextButtonsFooter3>
+        <View
+          style={[styles.container1, styles.materialIconTextButtonsFooter1]}
+        >
+          <TouchableOpacity
+            style={styles.buttonWrapper1}
+            onPress={() => {
+              role == "LocalPassenger"
+                ? navigation.navigate("LUserHome")
+                : navigation.navigate("FUserHome");
+            }}
+          >
+            <MaterialCommunityIconsIcon
+              name="camera-timer"
+              style={styles.icon11}
+            ></MaterialCommunityIconsIcon>
+            <Text style={styles.dashboar}>Dashboar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.activeButtonWrapper}
+            onPress={() => {
+              role == "LocalPassenger"
+                ? navigation.navigate("LMyQr")
+                : navigation.navigate("FMyQr");
+            }}
+          >
+            <MaterialCommunityIconsIcon
+              name="qrcode"
+              style={styles.activeIcon}
+            ></MaterialCommunityIconsIcon>
+            <Text style={styles.myQr}>My QR</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonWrapper2}
+            onPress={() => {
+              role == "LocalPassenger"
+                ? navigation.navigate("LocalPasengerProfiles")
+                : navigation.navigate("ForignPassengerProfile");
+            }}
+          >
+            <MaterialCommunityIconsIcon
+              name="account"
+              style={styles.icon22}
+            ></MaterialCommunityIconsIcon>
+            <Text style={styles.profile1}>Profile</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -123,116 +201,115 @@ function Alltravelhistory({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   group6: {
     width: 393,
     height: 851,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   rect1: {
     width: 393,
     height: 167,
-    backgroundColor: "rgba(0,0,0,1)"
+    backgroundColor: "rgba(0,0,0,1)",
   },
   group1: {
     width: 243,
     height: 55,
     marginTop: 56,
-    marginLeft: 75
+    marginLeft: 75,
   },
   sIpsum1: {
     top: 23,
     left: 24,
     position: "absolute",
-    color: "#121212"
+    color: "#121212",
   },
   icon2: {
     top: 0,
     left: 11,
     position: "absolute",
     color: "rgba(208,2,27,1)",
-    fontSize: 27
+    fontSize: 27,
   },
   icon3: {
     top: 23,
     left: 0,
     position: "absolute",
     color: "rgba(74,144,226,1)",
-    fontSize: 34
+    fontSize: 34,
   },
   sIpsum1Stack: {
     top: 0,
     left: 19,
     width: 27,
     height: 57,
-    position: "absolute"
+    position: "absolute",
   },
   icon1: {
     top: 6,
     left: 0,
     position: "absolute",
     color: "rgba(255,255,255,1)",
-    fontSize: 30
+    fontSize: 30,
   },
   sIpsum1StackStack: {
     width: 46,
-    height: 57
+    height: 57,
   },
   loremIpsum1: {
     top: 13,
     left: 13,
     position: "absolute",
-    color: "#121212"
+    color: "#121212",
   },
   group2: {
     top: 0,
     left: 0,
     width: 140,
     height: 26,
-    position: "absolute"
+    position: "absolute",
   },
   stsSriLanka1: {
     color: "rgba(255,255,255,1)",
-    fontSize: 21
+    fontSize: 21,
   },
   loremIpsum1Stack: {
     width: 140,
     height: 26,
-    marginLeft: 12
+    marginLeft: 12,
   },
   loremIpsum2: {
     color: "rgba(255,255,255,1)",
     width: 1000,
-    fontSize: 12
+    fontSize: 12,
   },
   loremIpsum1StackColumn: {
     width: 195,
     marginLeft: 2,
     marginTop: 13,
-    marginBottom: 4
+    marginBottom: 4,
   },
   sIpsum1StackStackRow: {
     height: 57,
-    flexDirection: "row"
+    flexDirection: "row",
   },
   travelHistory1: {
-
     color: "rgba(255,255,255,1)",
     fontSize: 25,
     marginTop: 18,
-    marginLeft: 16
+    marginLeft: 16,
   },
   loremIpsum3: {
     color: "#121212",
     fontSize: 15,
     marginTop: 8,
-    marginLeft: 83
+    marginLeft: 83,
   },
   image: {
     width: 237,
     height: 159,
-    marginLeft: 81
+    marginLeft: 81,
   },
   scrollArea: {
     width: 393,
@@ -241,32 +318,32 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(0,0,0,1)",
     shadowOffset: {
       width: 3,
-      height: 3
+      height: 3,
     },
     elevation: 5,
     shadowOpacity: 1,
     shadowRadius: 0,
-    marginTop: 13
+    marginTop: 13,
   },
   scrollArea_contentContainerStyle: {
     height: 396,
-    width: 393
+    width: 393,
   },
   group5: {
     width: 366,
     height: 71,
     marginTop: 28,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   group3: {
     width: 366,
     height: 71,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   group4: {
     width: 366,
     height: 71,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   button: {
     width: 366,
@@ -275,39 +352,37 @@ const styles = StyleSheet.create({
     shadowColor: "rgba(155,155,155,1)",
     shadowOffset: {
       width: 3,
-      height: 3
+      height: 3,
     },
     elevation: 15,
     shadowOpacity: 1,
     shadowRadius: 5,
     borderRadius: 10,
     marginTop: 5,
-    flexDirection: "row"
+    flexDirection: "row",
   },
   loremIpsum5: {
-    color: "#121212"
+    color: "#121212",
   },
   galle: {
-
     color: "rgba(74,144,226,1)",
     fontSize: 14,
-    marginLeft: 47
+    marginLeft: 20,
   },
   to8: {
     color: "rgba(155,155,155,1)",
     fontSize: 13,
     marginLeft: 8,
-    marginTop: 1
+    marginTop: 1,
   },
   kaduwela: {
-
     color: "rgba(74,144,226,1)",
     fontSize: 14,
-    marginLeft: 9
+    marginLeft: 9,
   },
   loremIpsum6: {
     color: "#121212",
-    marginLeft: 46
+    marginLeft: 20,
   },
   loremIpsum5Row: {
     height: 17,
@@ -315,14 +390,89 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 13,
     marginLeft: 11,
-    marginTop: 27
+    marginTop: 27,
   },
   materialIconTextButtonsFooter1: {
     height: 56,
     width: 393,
     marginTop: 3,
-    backgroundColor: "rgba(0,0,0,1)"
-  }
+    backgroundColor: "rgba(0,0,0,1)",
+  },
+  container1: {
+    backgroundColor: "#FFF",
+    flexDirection: "row",
+    shadowColor: "#111",
+    shadowOffset: {
+      width: 0,
+      height: -2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.2,
+    elevation: 3,
+  },
+  buttonWrapper1: {
+    flex: 1,
+    paddingTop: 8,
+    paddingBottom: 10,
+    paddingHorizontal: 12,
+    minWidth: 80,
+    maxWidth: 168,
+    alignItems: "center",
+  },
+  icon11: {
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    fontSize: 24,
+    opacity: 0.8,
+  },
+  dashboar: {
+    fontSize: 12,
+    color: "rgba(255,255,255,1)",
+    backgroundColor: "transparent",
+    paddingTop: 4,
+  },
+  activeButtonWrapper: {
+    flex: 1,
+    paddingTop: 6,
+    paddingBottom: 10,
+    paddingHorizontal: 12,
+    minWidth: 80,
+    maxWidth: 168,
+    alignItems: "center",
+  },
+  activeIcon: {
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    fontSize: 24,
+    opacity: 0.8,
+  },
+  myQr: {
+    fontSize: 12,
+    color: "rgba(255,255,255,1)",
+    backgroundColor: "transparent",
+    paddingTop: 4,
+  },
+  buttonWrapper2: {
+    flex: 1,
+    paddingTop: 8,
+    paddingBottom: 10,
+    paddingHorizontal: 12,
+    minWidth: 80,
+    maxWidth: 168,
+    alignItems: "center",
+  },
+  icon22: {
+    backgroundColor: "transparent",
+    color: "rgba(255,255,255,1)",
+    fontSize: 24,
+    opacity: 0.8,
+  },
+  profile1: {
+    fontSize: 12,
+    color: "rgba(255,255,255,1)",
+    backgroundColor: "transparent",
+    paddingTop: 4,
+  },
 });
 
 export default Alltravelhistory;
