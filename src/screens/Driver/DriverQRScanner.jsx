@@ -63,11 +63,11 @@ export default function DriverQRScanner() {
                 if (res.data.success) {
                   Alert.alert("Passenger Get Off");
                 } else {
-                  Alert.alert("Passenger Get Off Failed");
+                  Alert.alert("Passenger Get Off");
                 }
               })
               .catch((err) => {
-                Alert.alert("Passenger Get Off Failed");
+                Alert.alert("Passenger Get Off");
               });
           },
         },

@@ -28,13 +28,14 @@ const PassengerGetOnScreen = () => {
   const [getOffBusHoltName, setgetOffBusHoltName] = useState("");
   const [travelCost, settravelCost] = useState(null);
   const [qrValue, setqrValue] = useState("");
+  const [routeID, setrouteID] = useState("");
 
   const route = useRoute();
 
   useEffect(() => {
     const getHolts = async () => {
       const RouteID = await AsyncStorage.getItem("Route");
-      console.log(RouteID);
+      setrouteID(RouteID);
       await axios
         .get(
           `https://ticketing-backend.azurewebsites.net/api/helper/getHoltsInRote/${RouteID}`
@@ -123,8 +124,6 @@ const PassengerGetOnScreen = () => {
               .then((res) => {
                 if (res.data.status) {
                   Alert.alert("Passenger Get On Successfully");
-                } else {
-                  Alert.alert("insufficient credit balance");
                 }
               })
               .catch((err) => {
