@@ -21,9 +21,34 @@ function FSignUp({ navigation }) {
   const [country, setCountry] = useState("");
   const [validDate, setValidDate] = useState("");
 
+  const validate = async (text) => {
+    console.log(text);
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    if (reg.test(text) === false) {
+      console.log("Email is Not Correct");
+      this.setState({ email: text })
+      return false;
+    }
+    else {
+      this.setState({ email: text })
+      console.log("Email is Correct");
+    }
+  }
+
   //Signup when all fields are filled and passwords match and no existing user
   const signup = async (e) => {
+
+
+
     e.preventDefault();
+
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    let reg2 = /^[0-9\b]+$/;
+    let reg3 = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    let reg4 = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+    let reg5 = /^[A-Za-z]+$/;
+
+
     if (
       firstName == "" ||
       lastName == "" ||
@@ -36,7 +61,34 @@ function FSignUp({ navigation }) {
       validDate == ""
     ) {
       alert("Please fill all the fields");
-    } else if (password != confirmPassword) {
+    } else if (reg5.test(firstName) === false) {
+      alert("Name must contain only letters.");
+      return false;
+    } else if (reg5.test(lastName) === false) {
+      alert("Name must contain only letters.");
+      return false;
+    }
+    else if (reg.test(email) === false) {
+      alert("Email is Not Correct");
+      return false;
+    }
+    else if (reg2.test(contact) === false){ 
+      alert("Please enter valid phone number.");
+      return false;
+    }
+    else if (contact.length != 10){ 
+      alert("Please enter valid phone number.");
+      return false;
+    }    
+    else if (reg3.test(password) === false){ 
+      alert("Your password must contain Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
+      return false;
+    }
+    else if (reg4.test(validDate) === false){ 
+      alert("Date format does not match");
+      return false;
+    }
+    else if (password != confirmPassword) {
       alert("Passwords do not match");
     } else {
       const data = {
@@ -50,6 +102,8 @@ function FSignUp({ navigation }) {
         userExpDate: validDate,
         role: "ForeignPassenger",
       };
+
+
 
       console.log("====================================");
       console.log(data);
@@ -97,7 +151,9 @@ function FSignUp({ navigation }) {
       <TextInput
         placeholder="Email"
         style={styles.textInput7}
+        // onChangeText={(text) => setEmail(text)
         onChangeText={(text) => setEmail(text)}
+        // value={email}
       ></TextInput>
       <TextInput
         placeholder="Contact Number"
@@ -145,6 +201,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "rgba(238,238,30,1)",
+  },
+  datePickerStyle: {
+    width: 230,
   },
   materialButtonDark: {
     height: 47,

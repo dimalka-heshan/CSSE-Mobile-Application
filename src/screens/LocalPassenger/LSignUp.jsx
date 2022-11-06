@@ -20,6 +20,12 @@ function LSignUp({ navigation }) {
 
   //Signup when all fields are filled and passwords match and no existing user
   const signup = async (e) => {
+
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    let reg2 = /^[0-9\b]+$/;
+    let reg3 = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    let reg5 = /^[A-Za-z]+$/;
+
     e.preventDefault();
     if (
       firstName == "" ||
@@ -30,7 +36,31 @@ function LSignUp({ navigation }) {
       contact == ""
     ) {
       alert("Please fill all the fields");
-    } else if (password != confirmPassword) {
+    } else if (reg5.test(firstName) === false) {
+      alert("Name must contain only letters.");
+      return false;
+    } else if (reg5.test(lastName) === false) {
+      alert("Name must contain only letters.");
+      return false;
+    }
+    else if (reg.test(email) === false) {
+      alert("Email is Not Correct");
+      return false;
+    }
+    else if (reg2.test(contact) === false){ 
+      alert("Please enter valid phone number.");
+      return false;
+    }
+    else if (contact.length != 10){ 
+      alert("Please enter valid phone number.");
+      return false;
+    }    
+    else if (reg3.test(password) === false){ 
+      alert("Your password must contain Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character");
+      return false;
+    }
+    
+    else if (password != confirmPassword) {
       alert("Passwords do not match");
     } else {
       const data = {
@@ -54,7 +84,7 @@ function LSignUp({ navigation }) {
         .then((response) => {
           alert("User registered successfully");
           setTimeout(() => {
-            navigation.navigate("llogin");
+            navigation.navigate("SignIn");
           }, 2000);
         })
         .catch((error) => {
