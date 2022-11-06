@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
@@ -37,6 +38,22 @@ function Driverprofiles({ navigation }) {
   useEffect(() => {
     GetDriver();
   }, []);
+
+  const onLogOut = async () => {
+    Alert.alert("Are you sure you want to logout?", "", [
+      {
+        text: "Ok",
+        onPress: async () => {
+          await AsyncStorage.clear();
+          navigation.push("SignIn");
+        },
+      },
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+      },
+    ]);
+  };
 
   return (
     <View style={styles.container}>
@@ -73,14 +90,22 @@ function Driverprofiles({ navigation }) {
         </View>
         <View style={styles.rect2Stack}>
           <View style={styles.rect2}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("UpdateDriverProfile")}
-            >
-              <FontAwesomeIcon
-                name="pencil-square-o"
-                style={styles.icon4}
-              ></FontAwesomeIcon>
-            </TouchableOpacity>
+            <View style={styles.ButtonContainer}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("UpdateDriverProfile")}
+              >
+                <FontAwesomeIcon
+                  name="pencil-square-o"
+                  style={styles.icon4}
+                ></FontAwesomeIcon>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onLogOut}>
+                <FontAwesomeIcon
+                  name="sign-out"
+                  style={styles.loguotButtonContainer}
+                ></FontAwesomeIcon>
+              </TouchableOpacity>
+            </View>
             <Text style={styles.nimnaThiranjaya1}>{user.fullName}</Text>
             {/* <View style={styles.icon5Row}>
               <EntypoIcon name="users" style={styles.icon5}></EntypoIcon>
@@ -164,6 +189,26 @@ function Driverprofiles({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  logoutText: {
+    color: "rgba(255,255,255,1)",
+    fontWeight: "bold",
+  },
+  loguotButtonContainer: {
+    color: "rgba(74,74,74,1)",
+    flexDirection: "row",
+    fontSize: 33,
+    marginTop: 5.5,
+    marginLeft: 15,
+  },
+  ButtonContainer: {
+    flexDirection: "row",
+  },
+  Logout: {
+    width: 100,
+    justifyContent: "center",
+    marginLeft: 150,
+    marginTop: -70,
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -283,7 +328,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginTop: 8,
-    marginLeft: 300,
+    marginLeft: 270,
   },
   nimnaThiranjaya1: {
     color: "#121212",

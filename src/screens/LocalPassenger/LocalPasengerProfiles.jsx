@@ -1,5 +1,12 @@
 import React, { Component, useState, useEffect } from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -29,6 +36,21 @@ function LocalPasengerProfiles({ navigation }) {
     getUser();
   }, []);
 
+  const onLogOut = async () => {
+    Alert.alert("Are you sure you want to logout?", "", [
+      {
+        text: "Ok",
+        onPress: async () => {
+          await AsyncStorage.clear();
+          navigation.push("SignIn");
+        },
+      },
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+      },
+    ]);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.group3}>
@@ -71,14 +93,23 @@ function LocalPasengerProfiles({ navigation }) {
             ></Image>
             <View style={styles.icon4Filler}></View>
           </View>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("LocalPasengerUpdate")}
-          >
-            <FontAwesomeIcon
-              name="pencil-square-o"
-              style={styles.icon4}
-            ></FontAwesomeIcon>
-          </TouchableOpacity>
+
+          <View style={styles.ButtonContainer}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("LocalPasengerUpdate")}
+            >
+              <FontAwesomeIcon
+                name="pencil-square-o"
+                style={styles.icon4}
+              ></FontAwesomeIcon>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onLogOut}>
+              <FontAwesomeIcon
+                name="sign-out"
+                style={styles.loguotButtonContainer}
+              ></FontAwesomeIcon>
+            </TouchableOpacity>
+          </View>
           <Text style={styles.ravinduSandeepana1}>{user.fullName}</Text>
           <View style={styles.icon5Row}>
             <EntypoIcon name="users" style={styles.icon5}></EntypoIcon>
@@ -149,6 +180,26 @@ function LocalPasengerProfiles({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  logoutText: {
+    color: "rgba(255,255,255,1)",
+    fontWeight: "bold",
+  },
+  Logout: {
+    marginTop: 20,
+    width: 100,
+    justifyContent: "center",
+    marginLeft: 90,
+  },
+  loguotButtonContainer: {
+    flexDirection: "row",
+    fontSize: 33,
+    marginTop: -3,
+    color: "rgba(74,74,74,1)",
+    marginLeft: 20,
+  },
+  ButtonContainer: {
+    flexDirection: "row",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -291,7 +342,7 @@ const styles = StyleSheet.create({
   icon5Row: {
     height: 38,
     flexDirection: "row",
-    marginTop: 47,
+    marginTop: 20,
     marginRight: 126,
   },
   icon6: {

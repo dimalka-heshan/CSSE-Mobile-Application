@@ -516,6 +516,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.2,
     elevation: 3,
+    top: -5,
   },
   buttonWrapper1: {
     flex: 1,

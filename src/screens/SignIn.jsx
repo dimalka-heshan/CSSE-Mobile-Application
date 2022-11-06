@@ -103,6 +103,7 @@ export default function SignIn({ navigation }) {
       <TextInput
         placeholder="Password"
         style={styles.textInput}
+        secureTextEntry={true}
         onChangeText={(text) => setPassword(text)}
       ></TextInput>
       {error ? <Text style={styles.errorText}>{error}</Text> : null}

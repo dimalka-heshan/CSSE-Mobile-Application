@@ -1,5 +1,12 @@
 import React, { Component, useState, useEffect } from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import FeatherIcon from "react-native-vector-icons/Feather";
@@ -29,6 +36,22 @@ function ForignPassengerProfile({ navigation }) {
   useEffect(() => {
     getUser();
   }, []);
+
+  const onLogOut = async () => {
+    Alert.alert("Are you sure you want to logout?", "", [
+      {
+        text: "Ok",
+        onPress: async () => {
+          await AsyncStorage.clear();
+          navigation.push("SignIn");
+        },
+      },
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+      },
+    ]);
+  };
 
   return (
     <View style={styles.container}>
@@ -76,6 +99,28 @@ function ForignPassengerProfile({ navigation }) {
             <FontAwesomeIcon
               name="pencil-square-o"
               style={styles.icon4}
+            ></FontAwesomeIcon>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ForignPassengerUpdate")}
+          >
+            <FontAwesomeIcon
+              name="pencil-square-o"
+              style={styles.icon4}
+            ></FontAwesomeIcon>
+          </TouchableOpacity>
+          {/* <TouchableOpacity
+            style={styles.loguotButtonContainer}
+            onPress={onLogOut}
+          >
+            <Text style={styles.logoutText}>Logout</Text>
+          </TouchableOpacity> */}
+
+          <TouchableOpacity onPress={onLogOut}>
+            <FontAwesomeIcon
+              name="sign-out"
+              style={styles.loguotButtonContainer}
             ></FontAwesomeIcon>
           </TouchableOpacity>
         </View>
@@ -163,6 +208,13 @@ function ForignPassengerProfile({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loguotButtonContainer: {
+    flexDirection: "row",
+    fontSize: 33,
+    marginTop: -3,
+    color: "rgba(74,74,74,1)",
+    marginLeft: 20,
   },
   group2: {
     width: 393,
@@ -264,7 +316,12 @@ const styles = StyleSheet.create({
   icon4: {
     color: "rgba(74,74,74,1)",
     fontSize: 30,
-    marginLeft: 69,
+    marginLeft: 45,
+  },
+  iconx: {
+    color: "rgba(74,74,74,1)",
+    fontSize: 30,
+    marginLeft: 50,
   },
   imageRow: {
     height: 111,

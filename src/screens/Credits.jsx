@@ -26,6 +26,9 @@ function Credits({ navigation }) {
     setrole(value);
   };
 
+  const onRefresh = () => {
+    navigation.push("Credits");
+  };
   const getuserCredits = async () => {
     const Token = await AsyncStorage.getItem("Token");
     await axios
@@ -89,6 +92,7 @@ function Credits({ navigation }) {
               </Text>
               <MaterialIconsIcon
                 name="refresh"
+                onPress={onRefresh}
                 style={styles.icon5}
               ></MaterialIconsIcon>
             </View>
