@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
   icon6Row: {
     height: 38,
     flexDirection: "row",
-    marginTop: 24,
+    marginTop: 50,
     marginLeft: 74,
     marginRight: 154,
   },

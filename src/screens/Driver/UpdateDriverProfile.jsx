@@ -48,16 +48,10 @@ function UpdateDriverProfile({ navigation }) {
   }, []);
 
   const onUpdateDriver = async () => {
-
     let reg2 = /^[0-9\b]+$/;
     let reg5 = /^[A-Za-z]+$/;
 
-    if (
-      firstName == "" ||
-      lastName == "" ||
-      phoneNo == "" 
-
-    ) {
+    if (firstName == "" || lastName == "" || phoneNo == "") {
       alert("Please fill all the fields");
     } else if (reg5.test(firstName) === false) {
       alert("Name must contain only letters.");
@@ -65,13 +59,13 @@ function UpdateDriverProfile({ navigation }) {
     } else if (reg5.test(lastName) === false) {
       alert("Name must contain only letters.");
       return false;
-    } else if (reg2.test(phoneNo) === false){ 
+    } else if (reg2.test(phoneNo) === false) {
       alert("Please enter valid phone number.");
       return false;
-    } else if (phoneNo.length != 10){ 
+    } else if (phoneNo.length != 10) {
       alert("Please enter valid phone number.");
       return false;
-    } 
+    }
 
     const Token = await AsyncStorage.getItem("Token");
     await axios
@@ -146,7 +140,7 @@ function UpdateDriverProfile({ navigation }) {
           <Text style={styles.lastName}>Last Name</Text>
           <TextInput
             placeholder="Input"
-            style={styles.inputStyle3}
+            style={styles.inputStyle5}
             value={lastName}
             onChangeText={(text) => setlastName(text)}
           ></TextInput>
@@ -155,7 +149,7 @@ function UpdateDriverProfile({ navigation }) {
           <Text style={styles.mobileNo}>Mobile No</Text>
           <TextInput
             placeholder="Input"
-            style={styles.inputStyle3}
+            style={styles.inputStyle5}
             value={phoneNo}
             onChangeText={(text) => setphoneNo(text)}
           ></TextInput>
